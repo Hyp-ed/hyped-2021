@@ -291,7 +291,7 @@ int8_t GPIO::wait()
 void GPIO::set()
 {
   if (!initialised_) {
-    log_.ERR("GPIO", "service has not been initialised");
+    // log_.ERR("GPIO", "service has not been initialised");
     return;
   }
 
@@ -311,7 +311,7 @@ void GPIO::set()
 void GPIO::clear()
 {
   if (!initialised_) {
-    log_.ERR("GPIO", "service has not been initialised");
+    // log_.ERR("GPIO", "service has not been initialised");
     return;
   }
 
@@ -330,7 +330,7 @@ void GPIO::clear()
 uint8_t GPIO::read()
 {
   if (!initialised_) {
-    log_.ERR("GPIO", "service has not been initialised");
+    // log_.ERR("GPIO", "service has not been initialised");
     return 0;
   }
 

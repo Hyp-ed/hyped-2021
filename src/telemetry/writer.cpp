@@ -34,7 +34,70 @@ void Writer::packAdditionalData()
   rjwriter_.StartArray();
 
   // edit below
+  startList("Batteries");
+  startList("Low Power Batteries");
+  startList("LP 1");
+  add("Voltage", 17.5, static_cast<double>(29.4), "V", static_cast<float>(24.5));
+  add("Current", 0, 50, "A", 45);
+  add("Charge", 20, 100, "%", 70);
+  add("Temperature", 10, 60, "C", 35);
+  startList("Individual Voltages");
+  add("Cell 1", 17.5, 29.4, "V", 20);
+  add("Cell 2", 17.5, 29.4, "V", 24);
+  add("Cell 3", 17.5, 29.4, "V", 28);
+  add("Cell 4", 17.5, 29.4, "V", 30);
+  add("Cell 5", 17.5, 29.4, "V", 31);
+  endList();
+  startList("Individual Temperatures");
+  add("Cell 1", 10, 60, "C", 5);
+  add("Cell 2", 10, 60, "C", 40);
+  add("Cell 3", 10, 60, "C", 50);
+  add("Cell 4", 10, 60, "C", 59);
+  add("Cell 5", 10, 60, "C", 61);
+  endList();
+  endList();
 
+  startList("LP 2");
+  add("Voltage", 17.5, 29.4, "V", static_cast<float>(24.5));
+  add("Current", 0, 50, "A", 45);
+  add("Charge", 20, 100, "%", 70);
+  add("Temperature", 10, 60, "C", 35);
+  endList();
+
+  startList("LP 3");
+  add("Voltage", 17.5, 29.4, "V", static_cast<float>(24.5));
+  add("Current", 0, 50, "A", 45);
+  add("Charge", 20, 100, "%", 70);
+  add("Temperature", 10, 60, "C", 35);
+  endList();
+
+  endList();
+  startList("High Power Batteries");
+
+  startList("HP 1");
+  add("Voltage", 100, 129.6, "V", 115);
+  add("Current", 0, 350, "A", 100);
+  add("Charge", 20, 100, "%", 70);
+  add("Avg Temperature", 10, 65, "C", 35);
+  add("Low Temperature", 10, 65, "C", 20);
+  add("High Temperature", 10, 65, "C", 40);
+  add("Low Voltage Cell", 2.7, 3.6, "V", 3);
+  add("High Voltage Cell", 2.7, 3.6, "V", static_cast<float>(3.2));
+  endList();
+
+  startList("HP 2");
+  add("Voltage", 100, 129.6, "V", 115);
+  add("Current", 0, 350, "A", 100);
+  add("Charge", 20, 100, "%", 70);
+  add("Avg Temperature", 10, 65, "C", 35);
+  add("Low Temperature", 10, 65, "C", 20);
+  add("High Temperature", 10, 65, "C", 40);
+  add("Low Voltage Cell", 2.7, 3.6, "V", 3);
+  add("High Voltage Cell", 2.7, 3.6, "V", static_cast<float>(3.2));
+  endList();
+
+  endList();
+  endList();
   // edit above
 
   rjwriter_.EndArray();
@@ -64,7 +127,38 @@ void Writer::packStatusData()
   rjwriter_.Key("status_data");
   rjwriter_.StartArray();
 
-  // TODO(everyone): add all required data points
+  startList("EM Brakes");
+  add("EM Brake 1", true);
+  add("EM Brake 2", true);
+  endList();
+
+  startList("Friction Brakes");
+  add("Friction Brake 1", true);
+  add("Friction Brake 2", true);
+  endList();
+
+  startList("IMUs");
+  add("IMU 1", data_.getSensorsData().imu.value[0].operational);
+  add("IMU 2", data_.getSensorsData().imu.value[1].operational);
+  add("IMU 3", data_.getSensorsData().imu.value[2].operational);
+  add("IMU 4", data_.getSensorsData().imu.value[3].operational);
+  endList();
+
+  startList("Wheel Encoders");
+  add("Wheel Encoder 1", data_.getSensorsData().encoder.value[0].operational);
+  add("Wheel Encoder 2", data_.getSensorsData().encoder.value[1].operational);
+  add("Wheel Encoder 3", data_.getSensorsData().encoder.value[2].operational);
+  add("Wheel Encoder 4", data_.getSensorsData().encoder.value[3].operational);
+  endList();
+
+  startList("Modules");
+  add("Motors", data_.getMotorData().module_status);
+  add("Sensors", data_.getSensorsData().module_status);
+  add("Navigation", data_.getNavigationData().module_status);
+  add("Batteries", data_.getBatteriesData().module_status);
+  add("Telemetry", data_.getTelemetryData().module_status);
+  add("Brakes", data_.getEmergencyBrakesData().module_status);
+  endList();
 
   rjwriter_.EndArray();
 }
