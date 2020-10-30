@@ -93,7 +93,6 @@ void Main::run()
       case data::State::kInvalid:
         log_.ERR("STATE", "we are in Invalid state");
       case data::State::kFinished:
-        if (checkReset())                break;
       case data::State::kFailureStopped:
       default:
         break;
@@ -129,18 +128,6 @@ bool Main::checkSystemsChecked()
       emergency_brakes_data_.module_status == ModuleStatus::kReady) {
     log_.INFO("STATE", "systems ready");
     hypedMachine.handleEvent(kSystemsChecked);
-    return true;
-  }
-  return false;
-}
-
-bool Main::checkReset()
-{
-  if (telemetry_data_.reset_command) {
-    log_.INFO("STATE", "reset command received");
-    hypedMachine.handleEvent(kReset);
-    telemetry_data_.reset_command = false;  // reset the command to false
-    data_.setTelemetryData(telemetry_data_);
     return true;
   }
   return false;

@@ -66,9 +66,6 @@ void RecvLoop::run()
     } else if (message == "LAUNCH") {
       log_.INFO("Telemetry", "FROM SERVER: LAUNCH");
       telem_data_struct.launch_command = true;
-    } else if (message == "RESET") {
-      log_.INFO("Telemetry", "FROM SERVER: RESET");
-      telem_data_struct.reset_command = true;
     } else if (message == "SERVER_PROPULSION_GO") {
       log_.INFO("Telemetry", "FROM SERVER: SERVICE_PROPULSION_GO");
       telem_data_struct.service_propulsion_go = true;

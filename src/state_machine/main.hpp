@@ -50,7 +50,6 @@ class Main: public Thread {
   // return true iff the event has been fired
   bool checkInitialised();
   bool checkSystemsChecked();
-  bool checkReset();
   bool checkOnStart();
   bool checkTelemetryCriticalFailure();
   bool checkCriticalFailure();

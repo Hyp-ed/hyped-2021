@@ -32,8 +32,7 @@ enum Event {
   kMaxDistanceReached,
   kAtRest,
   kOnExit,
-  kFinish,
-  kReset
+  kFinish
 };
 
 }}   // namespace hyped::state_machine
