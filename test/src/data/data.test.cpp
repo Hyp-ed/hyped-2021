@@ -1,3 +1,20 @@
+/*
+ * Author: Pablo Morandé
+ * Organisation: HYPED
+ * Date: 13/11/2020
+ * Description: Testing file for data.cpp
+ *
+ *    Copyright 2018 HYPED
+ *    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ *    except in compliance with the License. You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software distributed under
+ *    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ *    either express or implied. See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 #include "gtest/gtest.h"
 #include "utils/logger.hpp"
 #include "data/data.hpp"
@@ -18,7 +35,8 @@ struct NavigationDataTest: public ::testing ::Test
 
     void TearDown() {}
 };
-TEST_F(NavigationDataTest, NavigationDataSetGetTest){
+TEST_F(NavigationDataTest, NavigationDataSetGetTest)
+{
     _d->setNavigationData(nav_data);
     hyped::data::Navigation received_nav_data = _d->getNavigationData();
 
@@ -33,7 +51,8 @@ struct TelemetryDataTest : public ::testing ::Test
 {
   hyped::data::Data* _d;
   hyped::data::Telemetry telemetry_data;
-  void SetUp() {
+  void SetUp()
+  {
     _d = &hyped::data::Data::getInstance();
     telemetry_data.emergency_stop_command = true;
     telemetry_data.launch_command = true;
@@ -42,21 +61,22 @@ struct TelemetryDataTest : public ::testing ::Test
     telemetry_data.service_propulsion_go = true;
     telemetry_data.module_status = hyped::data::ModuleStatus::kReady;
   }
-
-  void TearDown() {}
 };
-TEST_F(TelemetryDataTest, NavigationDataSetGetTest) {
+TEST_F(TelemetryDataTest, NavigationDataSetGetTest)
+{
   _d->setTelemetryData(telemetry_data);
   hyped::data::Telemetry received_telemetry_data = _d->getTelemetryData();
 
   ASSERT_EQ(received_telemetry_data.emergency_stop_command, telemetry_data.emergency_stop_command);
   ASSERT_EQ(received_telemetry_data.launch_command, telemetry_data.launch_command);
-  ASSERT_EQ(received_telemetry_data.nominal_braking_command,  telemetry_data.nominal_braking_command);
-  ASSERT_EQ(received_telemetry_data.service_propulsion_go,telemetry_data.service_propulsion_go);
+  ASSERT_EQ(received_telemetry_data.nominal_braking_command,
+  telemetry_data.nominal_braking_command);
+  ASSERT_EQ(received_telemetry_data.service_propulsion_go, telemetry_data.service_propulsion_go);
   ASSERT_EQ(received_telemetry_data.module_status, telemetry_data.module_status);
 }
-TEST(dataOnlyOneInstance, InstanceTest) {
+TEST(dataOnlyOneInstance, InstanceTest)
+{
   hyped::data::Data* _d = &hyped::data::Data::getInstance();
   hyped::data::Data* _d2 = &hyped::data::Data::getInstance();
-  ASSERT_EQ(_d,_d2);
-   }
+  ASSERT_EQ(_d, _d2);
+}
