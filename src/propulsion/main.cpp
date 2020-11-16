@@ -122,12 +122,6 @@ void Main::run()
             previous_state_ = current_state_;
           }
           state_processor_->enterPreOperational();
-    } else if (current_state_ == State::kFinished) {
-          if (previous_state_ != current_state_) {
-            log_.INFO("Motor", "State Finished");
-            previous_state_ = current_state_;
-          }
-          state_processor_->enterPreOperational();
     } else if (current_state_ == State::kRunComplete) {
           // Run complete
           if (previous_state_ != current_state_) {
@@ -135,6 +129,12 @@ void Main::run()
             previous_state_ = current_state_;
           }
           state_processor_->quickStopAll();
+    } else if (current_state_ == State::kFinished) {
+          if (previous_state_ != current_state_) {
+            log_.INFO("Motor", "State Finished");
+            previous_state_ = current_state_;
+          }
+          state_processor_->enterPreOperational();
     } else {
           // Unknown State
           if (previous_state_ != current_state_) {
