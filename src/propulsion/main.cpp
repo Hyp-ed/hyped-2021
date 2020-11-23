@@ -47,7 +47,25 @@ void Main::run()
     // Get the current state of the system from the state machine's data
     current_state_ = data_.getStateMachineData().current_state;
 
-    if (current_state_ == State::kIdle) {  // Initialize motors
+    // ***************** check for emergency states ********************
+    if (current_state_ == State::kEmergencyBraking) {
+      // Stop all motors
+      if (previous_state_ != current_state_) {
+          log_.INFO("Motor", "State EmergencyBraking");
+          previous_state_ = current_state_;
+      }
+      state_processor_->quickStopAll();
+    } else if (current_state_ == State::kFailureStopped) {
+      // Enter preoperational
+      if (previous_state_ != current_state_) {
+          log_.INFO("Motor", "State FailureStopped");
+          previous_state_ = current_state_;
+      }
+      state_processor_->enterPreOperational();
+    }
+
+    // *************** check for non-emergency states ******************
+    else if (current_state_ == State::kIdle) {  // Initialize motors
       if (current_state_ != previous_state_) {
         log_.INFO("Motor", "State idle");
         previous_state_ = current_state_;
@@ -88,21 +106,17 @@ void Main::run()
             previous_state_ = current_state_;
           }
           state_processor_->accelerate();
-    } else if (current_state_ == State::kNominalBraking) {
+    } 
+    else if (current_state_ == State::kNominalBraking) 
+    {
           // Stop all motors
           if (previous_state_ != current_state_) {
             log_.INFO("Motor", "State NominalBraking");
             previous_state_ = current_state_;
           }
           state_processor_->quickStopAll();
-    } else if (current_state_ == State::kEmergencyBraking) {
-          // Stop all motors
-          if (previous_state_ != current_state_) {
-            log_.INFO("Motor", "State EmergencyBraking");
-            previous_state_ = current_state_;
-          }
-          state_processor_->quickStopAll();
-    } else if (current_state_ == State::kExiting) {
+    } 
+    else if (current_state_ == State::kExiting) {
           // Move very slowly out of tube
           if (previous_state_ != current_state_) {
             log_.INFO("Motor", "State Exiting");
@@ -115,12 +129,7 @@ void Main::run()
           } else {
             state_processor_->quickStopAll();
           }
-    } else if (current_state_ == State::kFailureStopped) {
-          // Enter preoperational
-          if (previous_state_ != current_state_) {
-            log_.INFO("Motor", "State FailureStopped");
-            previous_state_ = current_state_;
-          }
+
           state_processor_->enterPreOperational();
     } else if (current_state_ == State::kRunComplete) {
           // Run complete
