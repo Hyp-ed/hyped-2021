@@ -2,7 +2,7 @@
  * Author: Karthik Narayanan
  * Organisation: HYPED
  * Date: 30.10.2020
- * Description: Handles the communication with the CAN Bus
+ * Description: Sends and recieves large amount of CAN messages 
  *
  *    Copyright 2020 HYPED
  *    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
@@ -19,18 +19,12 @@
 #include "propulsion/can/can_sender.hpp"
 #include "utils/logger.hpp"
 #include "utils/system.hpp"
-<<<<<<< HEAD
 #include "propulsion/controller.hpp"
-=======
->>>>>>> ba3bcdb2d2cce9a44fdbd46445dfe337b1f732bc
 
 using hyped::utils::Logger;
 using hyped::motor_control::CanSender;
 using hyped::utils::io::can::Frame;
-<<<<<<< HEAD
 using hyped::motor_control::Controller;
-=======
->>>>>>> ba3bcdb2d2cce9a44fdbd46445dfe337b1f732bc
 
 
 bool sendTestMessage(CanSender& sender, Logger& log_)
@@ -49,7 +43,6 @@ bool sendTestMessage(CanSender& sender, Logger& log_)
   return sender.sendMessage(message);
 }
 
-<<<<<<< HEAD
 bool recieveTestMessage(CanSender& sender, Logger& log_, uint8_t node_id)
 {
   Frame message;
@@ -69,13 +62,10 @@ bool recieveTestMessage(CanSender& sender, Logger& log_, uint8_t node_id)
   return true;
 }
 
-=======
->>>>>>> ba3bcdb2d2cce9a44fdbd46445dfe337b1f732bc
 int main(int argc,char* argv[]) {
   hyped::utils::System::parseArgs(argc, argv);
   Logger& log_ = hyped::utils::System::getLogger();
   CanSender sender(log_,0);
-<<<<<<< HEAD
   Controller controller(log_, argc);
   sender.registerController();
   // Frame receive_msg();
@@ -88,11 +78,3 @@ int main(int argc,char* argv[]) {
 
   return 1;
 }
-
-=======
-  sender.registerController();
-  sendTestMessage(sender, log_);
-
-  return 1;
-}
->>>>>>> ba3bcdb2d2cce9a44fdbd46445dfe337b1f732bc
