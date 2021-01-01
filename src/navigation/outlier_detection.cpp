@@ -32,25 +32,26 @@ using std::vector;
 
 namespace navigation {
 
+// TODO: CURRENTLY, NOTHING HAPPENS ALL DATA POINTS ARE OUTLIERS
 
-  int OutlierDetection::dead_IMUS()
+  int OutlierDetection::deadIMUs()
   {
     int dead_imus = 0;
     // Detect dead IMUs (IMUs that have a zero reading)
     for (int i = 0; i < dataArray_.size(); i++) {
       if (dataArray_[i] == 0) {
-        is_sensor_dead_[i] = false;
+        isSensorDead_[i] = false;
         dead_imus++;
       } else {
-        is_sensor_dead_[i] = true;
+        isSensorDead_[i] = true;
       }
     }
     return dead_imus;
   }
   // Main outlier detection algorithm
-  void OutlierDetection::detect_outliers()
+  void OutlierDetection::detectOutliers()
   {
-  NavigationType median = getMedian();
+  NavigationType median = getMedian(dataArray_);
   NavigationType mean = getMean();
   NavigationType medAD = getMedianAD();
   NavigationType meanAD = getMeanAD(mean);
@@ -78,44 +79,53 @@ namespace navigation {
     }
     */
   }
-  NavigationType OutlierDetection::getMedian()
+
+  NavigationType OutlierDetection::getMedianAdjusted()
   {
     Navigation::NavigationArray dataArray_copy;
     std::copy(std::begin(dataArray_), std::end(dataArray_), std::begin(dataArray_copy));
+    std::sort(std::begin(dataArray_copy), std::end(dataArray_copy));
     NavigationType median;
-    NavigationType mid = dataArray_.size() / 2;
+    int numDeadIMUs = deadIMUs();
 
     // Calculate the median
-    // This calculation is different in case half of sensors are faulty/dead (aka reading 0.0) since
+    // This calculation is different in case >= half of sensors are faulty/dead (aka reading 0.0) since
     // that would break the algorithm.
-    std::sort(std::begin(dataArray_copy), std::end(dataArray_copy));
-    if (dead_IMUS() == data::Sensors::kNumImus / 2) {
+    if (numDeadIMUs >= data::Sensors::kNumImus / 2) {
         // Contains only non-zero readings of sensors to calculate a more realistic median, this is
-        // due to the small number of sensors. This array is the same length as the original
-        // (for consistency), does not contain faulty IMUs and duplicates the working ones.
-        Navigation::NavigationArray filteredArray;
-        int counter = 0;
+        // due to the small number of sensors.
+        vector<float> filteredArray(dataArray_.size() - numDeadIMUs);
         for (int i = 0; i < dataArray_.size(); i++) {
-            if (is_sensor_dead_[i]) {
-              filteredArray[counter] = dataArray_[i];
-              filteredArray[counter + 1] = dataArray_[i];
-              counter += 2;
+            if (!isSensorDead_[i]) {
+              filteredArray.push_back(dataArray_[i]);
             }
         }
         // Calculate the median using the filteredArray instead of dataArray_copy
         std::sort(std::begin(filteredArray), std::end(filteredArray));
-        if (dataArray_.size() % 2 == 0) {
+        NavigationType mid = filteredArray.size() / 2;
+        if (filteredArray.size() % 2 == 0) {
           median = (filteredArray[mid] + filteredArray[mid - 1]) / 2;
-        } else {
-            median = filteredArray[mid];
-          }
+        } 
+        else {
+          median = filteredArray[mid];
+        }
     } else {
         // Regular median calculation
-        if (dataArray_.size() % 2 == 0) {
-          median = (dataArray_copy[mid] + dataArray_copy[mid - 1]) / 2;
-      } else {
-          median = dataArray_copy[mid];
-      }
+        median = getMedian(dataArray_copy);
+    }
+    return median;
+  }
+
+  NavigationType OutlierDetection::getMedian(Navigation::NavigationArray dataArr)
+  {
+    NavigationType median;
+    NavigationType mid = dataArray_.size() / 2;
+    // Regular median calculation
+    if (dataArray_.size() % 2 == 0) {
+      median = (dataArr[mid] + dataArr[mid - 1]) / 2;
+    } 
+    else {
+      median = dataArr[mid];
     }
     return median;
   }
@@ -129,6 +139,7 @@ namespace navigation {
     mean = mean / dataArray_.size();
     return mean;
   }
+
   NavigationType OutlierDetection::getMedianAD()
   {
     NavigationType medAD = 0;

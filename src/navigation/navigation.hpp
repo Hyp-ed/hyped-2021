@@ -56,6 +56,7 @@ namespace navigation {
       typedef DataPoint<ImuDataArray>                             ImuDataPointArray;
       typedef array<NavigationVector, Sensors::kNumImus>          NavigationVectorArray;
       typedef array<array<NavigationType, Sensors::kNumImus>, 3>  ImuAxisData;
+      // Array of ints, with array size of kNumImus
       typedef array<NavigationType, Sensors::kNumImus>            NavigationArray;
       typedef array<NavigationType, Sensors::kNumImus-1>          NavigationArrayOneFaulty;
       typedef array<KalmanFilter, Sensors::kNumImus>              FilterArray;
