@@ -166,7 +166,7 @@ namespace navigation {
       static constexpr int kPrintFreq = 1;
       static constexpr NavigationType kEmergencyDeceleration = 24;
 
-      static constexpr NavigationType kStripeDistance = 30.48;
+      static constexpr NavigationType kStripeDistance = 15;
 
       static constexpr uint32_t pod_mass_           = 250;  // kg
       static constexpr float    mom_inertia_wheel_  = 0.04;  // kgm²
