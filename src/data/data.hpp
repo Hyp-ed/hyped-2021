@@ -127,7 +127,8 @@ struct Batteries : public Module {
 };
 
 struct EmergencyBrakes : public Module {
-  bool brakes_retracted[4] = {false};       // true if brakes retract
+  static constexpr int kNumEmbrakes = 4;
+  bool brakes_retracted[kNumEmbrakes] = {false};       // true if brakes retract
 };
 
 // -------------------------------------------------------------------------------------------------
