@@ -47,11 +47,15 @@ STATIC_ENABLE=
 test: $(T_TARGET)
 	$(Verb) ./$< --gtest_filter=-*_prod
 
+.PHONY: test-prod
 test-prod: $(T_TARGET)
 	$(Verb) ./$< --gtest_filter=*_prod
+
+.PHONY: test-all
 test-all: $(T_TARGET)
 	$(Verb) ./$<
 
+.PHONY: test-filter
 test-filter: $(T_TARGET)
 	$(Verb) ./$< --gtest_filter=$(GTEST_FILTERS)
 
