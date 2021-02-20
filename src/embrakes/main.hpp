@@ -27,6 +27,8 @@
 #include "embrakes/stepper.hpp"
 #include "embrakes/fake_stepper.hpp"
 
+using std::array;
+
 namespace hyped {
 
 using utils::concurrent::Thread;
@@ -56,7 +58,6 @@ class Main : public Thread
     */
     void run() override;
 
-
   private:
     Logger&                log_;
     data::Data&            data_;
@@ -64,10 +65,10 @@ class Main : public Thread
     data::StateMachine     sm_data_;
     data::EmergencyBrakes  em_brakes_;
     data::Telemetry        tlm_data_;
-    uint8_t                command_pins_[2];  // GPIO pin numbers for sending commands to brakes
-    uint8_t                button_pins_[2];   // GPIO pin numbers for retrieving brake status
-    StepperInterface*      m_brake_;          // Stepper for electromagnetic brakes
-    StepperInterface*      f_brake_;          // Stepper for friction brakes
+    std::array<uint8_t, 2> command_pins_;  // GPIO pin numbers for sending commands to brakes
+    std::array<uint8_t, 2> button_pins_;   // GPIO pin numbers for retrieving brake status
+    StepperInterface*      m_brake_;       // Stepper for electromagnetic brakes
+    StepperInterface*      f_brake_;       // Stepper for friction brakes
 };
 
 }}

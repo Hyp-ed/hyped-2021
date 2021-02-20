@@ -29,7 +29,7 @@ Main::Main(uint8_t id, Logger &log)
     sys_(utils::System::getSystem())
 {
   // parse GPIO pins from config.txt file
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < command_pins_.size(); i++) {
     command_pins_[i] = sys_.config->embrakes.command[i];
     button_pins_[i] = sys_.config->embrakes.button[i];
   }
