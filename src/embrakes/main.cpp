@@ -53,6 +53,7 @@ void Main::run()
     em_brakes_ = data_.getEmergencyBrakesData();
     sm_data_ = data_.getStateMachineData();
     tlm_data_ = data_.getTelemetryData();
+    nav_data_ = data_.getNavigationData();
 
     switch (sm_data_.current_state) {
       case data::State::kIdle:
@@ -94,8 +95,6 @@ void Main::run()
         }
 
         if (!m_brake_->checkClamped() && !f_brake_->checkClamped()) {
-          em_brakes_.module_status = ModuleStatus::kReady;
-          data_.setEmergencyBrakesData(em_brakes_);
         }
 
         Thread::sleep(em_brakes_.brake_command_wait_time);
@@ -112,7 +111,7 @@ void Main::run()
         if (!m_brake_->checkClamped()) {
           m_brake_->sendClamp();
         }
-        if (!f_brake_->checkClamped()) {
+        if (!f_brake_->checkClamped() && nav_data_.velocity <= em_brakes_.kFrictionBrakesThreshold) {
           f_brake_->sendClamp();
         }
         Thread::sleep(em_brakes_.brake_command_wait_time);
@@ -126,7 +125,10 @@ void Main::run()
         if (!m_brake_->checkClamped()) {
           m_brake_->sendClamp();
         }
-        if (!f_brake_->checkClamped()) {
+        // Activate friction brakes if velocity is below threshold OR if the navigation module has
+        // failed (velocity readings may be bad)
+        if (!f_brake_->checkClamped() && (nav_data_.velocity <= em_brakes_.kFrictionBrakesThreshold
+           || nav_data_.module_status == ModuleStatus::kCriticalFailure)) {
           f_brake_->sendClamp();
         }
         Thread::sleep(em_brakes_.brake_command_wait_time);

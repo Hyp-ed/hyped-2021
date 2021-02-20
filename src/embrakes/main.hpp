@@ -65,6 +65,7 @@ class Main : public Thread
     data::StateMachine     sm_data_;
     data::EmergencyBrakes  em_brakes_;
     data::Telemetry        tlm_data_;
+    data::Navigation       nav_data_;
     std::array<uint8_t, 2> command_pins_;  // GPIO pin numbers for sending commands to brakes
     std::array<uint8_t, 2> button_pins_;   // GPIO pin numbers for retrieving brake status
     StepperInterface*      m_brake_;       // Stepper for electromagnetic brakes
