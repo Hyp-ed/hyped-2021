@@ -95,6 +95,8 @@ void Main::run()
         }
 
         if (!m_brake_->checkClamped() && !f_brake_->checkClamped()) {
+          em_brakes_.module_status = ModuleStatus::kReady;
+          data_.setEmergencyBrakesData(em_brakes_);
         }
 
         Thread::sleep(em_brakes_.brake_command_wait_time);
