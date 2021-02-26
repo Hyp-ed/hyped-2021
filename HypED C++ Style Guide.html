@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://hyp-ed.github.io/styleguide/#Production%20Tests -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+  <title>HypED C++ Style Guide</title>
+  <link rel="stylesheet" type="text/css" href="./HypED C++ Style Guide_files/styleguide.css">
+  <script language="javascript" src="./HypED C++ Style Guide_files/styleguide.js.download"></script>
+  <!--link rel="shortcut icon" type="image/x-icon" href="https://www.google.com/favicon.ico"-->
+</head>
+
+<!-------------------------------------------------------------------------------------------------------------------
+  General Introduction
+-------------------------------------------------------------------------------------------------------------------->
+<body onload="initStyleGuide();">
+  <div id="content">
+    <h1>HypED C++ Style Guide</h1>
+    <div class="horizontal_toc" id="tocDiv"><div class="toc_title"></div><h3 class="ignoreLink" id="toc">Table of Contents</h3><table><tbody valign="top" class="toc"><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Header_Files">Header Files</a></div></td><td><div class="toc_stylepoint"><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Self_contained_Headers">Self-contained Headers</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#The__define_Guard">The #define Guard</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Names_and_Order_of_Includes">Names and Order of Includes</a></li></div></td></tr><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Naming">Naming</a></div></td><td><div class="toc_stylepoint"><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#General_Naming_Rules">General Naming Rules</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#File_Names">File Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Type_Names">Type Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Variable_Names">Variable Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Constant_Names">Constant Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Function_Names">Function Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Namespace_Names">Namespace Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Enumerator_Names">Enumerator Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Macro_Names">Macro Names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Exceptions_to_Naming_Rules">Exceptions to Naming Rules</a></li></div></td></tr><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Comments">Comments</a></div></td><td><div class="toc_stylepoint"><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Comment_Style">Comment Style</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#File_Comments">File Comments</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Class_Comments">Class Comments</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Function_Comments">Function Comments</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Variable_Comments">Variable Comments</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Implementation_Comments">Implementation Comments</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Punctuation,_Spelling_and_Grammar">Punctuation, Spelling and Grammar</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#TODO_Comments">TODO Comments</a></li></div></td></tr><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Formatting">Formatting</a></div></td><td><div class="toc_stylepoint"><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Line_Length">Line Length</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Spaces_vs._Tabs">Spaces vs. Tabs</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Function_Declarations_and_Definitions">Function Declarations and Definitions</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Function_Calls">Function Calls</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Braced_Initializer_List_Format">Braced Initializer List Format</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Conditionals">Conditionals</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Loops_and_Switch_Statements">Loops and Switch Statements</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Pointer_and_Reference_Expressions">Pointer and Reference Expressions</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Boolean_Expressions">Boolean Expressions</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Return_Values">Return Values</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Variable_and_Array_Initialization">Variable and Array Initialization</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Preprocessor_Directives">Preprocessor Directives</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Class_Format">Class Format</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Constructor_Initializer_Lists">Constructor Initializer Lists</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Namespace_Formatting">Namespace Formatting</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Horizontal_Whitespace">Horizontal Whitespace</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Vertical_Whitespace">Vertical Whitespace</a></li></div></td></tr><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Testing">Testing</a></div></td><td><div class="toc_stylepoint"><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Test%20Names">Test names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Test_File_Names">Test file names</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Test%20Fixtures">Test Fixtures</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Test%20Fixture%20Variables%20vs%20Local%20Test%20Variables">Test fixture variables vs local test variables</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Error%20Messages"> Error Messages</a></li>
+<li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Production%20Tests"> Production Tests</a></li>
+</div></td></tr><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Other">Other</a></div></td><td><div class="toc_stylepoint"><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Local_Variables">Local Variables
+      </a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Inheritance">Inheritance</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Declaration_Order">Declaration Order in Classes</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Function_Parameter_Ordering">Function Parameter Ordering</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Write_Short_Functions">Write Short Functions</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Casting">Casting</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Preincrement_and_Predecrement">Preincrement and Predecrement</a></li><li class="toc_entry"><a href="https://hyp-ed.github.io/styleguide/#Integer_Types">Integer Types</a></li></div></td></tr><tr valign="top"><td><div class="toc_category"><a href="https://hyp-ed.github.io/styleguide/#Exceptions_to_the_Rules">Exceptions to the Rules</a></div></td><td><div class="toc_stylepoint"></div></td></tr></tbody></table></div>
+
+    <div class="main_body">
+
+      <h2 class="ignoreLink" id="Background">Background</h2>
+
+      <p>C++ is the main development language in HypED. Since we will have dozens of developers coding
+        for the pod, it is very important that everyone adheres to the same code style. That way,
+        our code will be easily readable and navigable by anyone, not just the author.
+      </p>
+
+      <p>Note that this guide is not a C++ tutorial: we assume that the reader is familiar with the
+        language. If you do not understand something then it either means that there is a typo, in which
+        case please tell Brano, or that you need to brush up on your C++.
+      </p>
+
+      <h3 id="Goals" style="left: -46px; position: relative;">Goals of the Style Guide<a href="https://hyp-ed.github.io/styleguide/#Goals" alt="link to Goals"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+      <div class="stylebody">
+        <p>Why do we have this document?</p>
+
+        <p>There are a few core goals that we believe this guide should serve. These are the fundamental
+          <b>why</b>s that underlie all of the individual rules. By bringing these ideas to the fore, we
+          hope to ground discussions and make it clearer why the rules are in
+          place and why particular decisions have been made. If you understand what goals each rule is
+          serving, it should be clearer to everyone when a rule may be waived (some can be), and what
+          sort of argument or alternative would be necessary to change a rule in the guide.</p>
+
+        <p>The goals of the style guide as we currently see them are as follows:</p>
+        <dl>
+          <dt>Style rules should pull their weight</dt>
+          <dd>The benefit of a rule is measured relative to the codebase we would get without the rule,
+            so a rule against a very harmful practice may still have a small benefit if people are unlikely
+            to do it anyway. This principle mostly explains the rules we don’t have, rather than the
+            rules we do: for example, <code>goto</code> contravenes many of the following principles,
+            but is already vanishingly rare, so the Style Guide doesn’t discuss it.</dd>
+
+          <dt>Optimize for the reader, not the writer</dt>
+          <dd>Due to time constraints, much of our code might end up being developed solely by individual
+            people. Hence it is very important that everyone can read and navigate everyone elses code
+            easily should they need to take over the work.
+            We optimize for the ease of reading, maintaining, and debugging code in our codebase rather
+            than ease of writing said code. "Leave a trace for the reader" is a particularly common
+            sub-point of this principle.
+          </dd>
+        </dl>
+
+        <p>The intent of this document is to provide maximal guidance with reasonable restriction. As always,
+          common sense and good taste should prevail. By this we specifically refer to the established
+          conventions of the entire C++ community, not just your personal preferences or those
+          of your team. Be skeptical about and reluctant to use clever or unusual constructs: the absence
+          of a prohibition is not the same as a license to proceed. Use your judgment, and if you are
+          unsure, please don't hesitate to ask on Slack to get additional input.
+        </p>
+
+      </div>
+
+
+<!-------------------------------------------------------------------------------------------------------------------
+  Header Files
+-------------------------------------------------------------------------------------------------------------------->
+      <h2 id="Header_Files" style="left: -46px; position: relative;">Header Files<a href="https://hyp-ed.github.io/styleguide/#Header_Files" alt="link to Header_Files"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+
+      <p>In general, every
+        <code>.cpp</code> file should have an associated
+        <code>.hpp</code> file. There are some common exceptions, such as unittests and small
+        <code>.cpp</code> files containing just a
+        <code>main()</code> function.</p>
+
+      <p>Correct use of header files can make a huge difference to the readability, size and performance
+        of your code.</p>
+
+      <a id="The_-inl.h_Files"></a>
+      <h3 id="Self_contained_Headers" style="left: -46px; position: relative;">Self-contained Headers<a href="https://hyp-ed.github.io/styleguide/#Self_contained_Headers" alt="link to Self_contained_Headers"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Header files should be self-contained (compile on their own) and end in
+          <code>.hpp</code>. Non-header (<code>.cpp</code>) files  must not be included
+          from  other files.
+      </p></div>
+
+      <div class="stylebody">
+        <p>Users should not have to adhere to special conditions to include the header. Specifically,
+          a header should have <a href="https://hyp-ed.github.io/styleguide/#The__define_Guard">header guards</a> and include all other
+          headers it needs.</p>
+
+        <p>Place the definitions for template and inline functions in the same file as their declarations.
+          The definitions of these constructs must be included into every
+          <code>.cpp</code> file that uses them, or the program may fail to link in some build configurations.
+          Do not move these definitions to separately included header files (e.g.
+          <code>-inl.hpp</code>).</p>
+
+      </div>
+
+      <h3 id="The__define_Guard" style="left: -46px; position: relative;">The #define Guard<a href="https://hyp-ed.github.io/styleguide/#The__define_Guard" alt="link to The__define_Guard"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>All header files should have
+          <code>#define</code> guards to prevent multiple inclusion. The format of the symbol name should be
+          <code><i>&lt;PROJECT&gt;</i>_<i>&lt;PATH&gt;</i>_<i>&lt;FILE&gt;</i>_HPP_</code>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>To guarantee uniqueness, they should be based on the full path in a project's source tree. For
+          example, the file
+          <code>foo/src/bar/baz.hpp</code> in project
+          <code>foo</code> should have the following guard:
+        </p>
+
+        <pre>#ifndef FOO_BAR_BAZ_HPP_
+#define FOO_BAR_BAZ_HPP_
+
+...
+
+#endif  // FOO_BAR_BAZ_HPP_
+</pre>
+
+      </div>
+
+      <h3 id="Names_and_Order_of_Includes" style="left: -46px; position: relative;">Names and Order of Includes<a href="https://hyp-ed.github.io/styleguide/#Names_and_Order_of_Includes" alt="link to Names_and_Order_of_Includes"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use standard order for readability and to avoid hidden dependencies: Related header, C library,
+          C++ library, other libraries' headers, your project's headers.</p>
+      </div>
+
+      <div class="stylebody">
+        <p>
+          All of a project's header files should be listed as descendants of the project's source directory without
+          use of UNIX directory shortcuts
+          <code>.</code> (the current directory) or
+          <code>..</code> (the parent directory). For example,
+
+          <code>project/src/base/logging.hpp</code> should be included as:</p>
+
+        <pre>#include "base/logging.hpp"
+</pre>
+
+        <p>In
+          <code><var>dir/foo</var>.cpp</code> or
+          <code><var>dir/foo_test</var>.cpp</code>, whose main purpose is to implement or test the stuff in
+          <code><var>dir2/foo2</var>.hpp</code>, order your includes as follows:</p>
+
+        <ol>
+          <li>
+            <code><var>dir2/foo2</var>.hpp</code>.</li>
+
+          <li>C system files.</li>
+
+          <li>C++ system files.</li>
+
+          <li>Other libraries'
+            <code>.h</code>/<code>.hpp</code> files.
+          </li>
+
+          <li>
+            Your project's
+            <code>.hpp</code> files.
+          </li>
+        </ol>
+
+        <p>With the preferred ordering, if
+          <code><var>dir2/foo2</var>.hpp</code> omits any necessary includes, the build of
+          <code><var>dir/foo</var>.cpp</code> or
+          <code><var>dir/foo</var>_test.cpp</code> will break. Thus, this rule ensures that build breaks show up first for the people working
+          on these files, not for innocent people in other packages.</p>
+
+        <p>
+          <code><var>dir/foo</var>.cpp</code> and
+          <code><var>dir2/foo2</var>.hpp</code> are usually in the same directory (e.g.
+          <code>base/basictypes_test.cpp</code> and
+          <code>base/basictypes.hpp</code>), but may sometimes be in different directories too.</p>
+
+
+
+        <p>Within each section the includes should be ordered alphabetically.</p>
+
+        <p>You should include all the headers that define the symbols you rely upon. If you rely on symbols from
+          <code>bar.hpp</code>, don't count on the fact that you included
+          <code>foo.hpp</code> which (currently) includes
+          <code>bar.hpp</code>: include
+          <code>bar.hpp</code> yourself, unless
+          <code>foo.hpp</code> explicitly demonstrates its intent to provide you the symbols of
+          <code>bar.hpp</code>. However, any includes present in the related header do not need to be included again in the
+          related
+          <code>.cpp</code> (i.e.,
+          <code>foo.cpp</code> can rely on
+          <code>foo.hpp</code>'s includes).</p>
+
+        <p>For example, the includes in
+
+          <code>project/src/foo/internal/fooserver.cpp</code> might look like this:</p>
+
+
+        <pre>#include "foo/server/fooserver.hpp"
+
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+
+#include &lt;hash_map&gt;
+#include &lt;vector&gt;
+
+#include "base/basictypes.hpp"
+#include "base/commandlineflags.hpp"
+#include "foo/server/bar.hpp"
+</pre>
+
+      </div>
+
+<!-------------------------------------------------------------------------------------------------------------------
+  Naming
+-------------------------------------------------------------------------------------------------------------------->
+      <h2 id="Naming" style="left: -46px; position: relative;">Naming<a href="https://hyp-ed.github.io/styleguide/#Naming" alt="link to Naming"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+
+      <p>The style of a name immediately informs us what sort of thing the named entity is: a type,
+        a variable, a function, a constant, a macro, etc., without requiring us to search for the declaration
+        of that entity. The pattern-matching engine in our brains relies a great deal on these naming rules.
+      </p>
+
+      <p>Naming rules are pretty arbitrary, but we feel that consistency is more important than individual
+        preferences in this area, so regardless of whether you find them sensible or not, the rules are
+        the rules.</p>
+
+      <h3 id="General_Naming_Rules" style="left: -46px; position: relative;">General Naming Rules<a href="https://hyp-ed.github.io/styleguide/#General_Naming_Rules" alt="link to General_Naming_Rules"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Names should be descriptive; avoid abbreviation.</p>
+      </div>
+
+      <div class="stylebody">
+        <p>Give as descriptive a name as possible, within reason. Do not worry about saving horizontal space
+          as it is far more important to make your code immediately understandable by a new reader. Do
+          not use abbreviations that will be ambiguous or unfamiliar to people who may reasonably be expected
+          to read the code, and do not abbreviate by deleting letters within a word.</p>
+
+        <pre>int price_count_reader;    // No abbreviation.
+int num_errors;            // "num" is a widespread convention.
+int num_dns_connections;   // Most people know what "DNS" stands for.
+</pre>
+
+        <pre class="badcode">int n;                     // Meaningless.
+int nerr;                  // Ambiguous abbreviation.
+int n_comp_conns;          // Ambiguous abbreviation.
+int wgc_connections;       // Only your group knows what this stands for.
+int pc_reader;             // Lots of things can be abbreviated "pc".
+int cstmr_id;              // Deletes internal letters.
+</pre>
+
+        <p>Note that certain universally-known abbreviations are OK, such as
+          <code>i</code> for an iteration variable and
+          <code>T</code> for a template parameter.</p>
+
+        <p>Template parameters should follow the naming style for their category: type template parameters
+          should follow the rules for
+          <a href="https://hyp-ed.github.io/styleguide/#Type_Names">type names</a>, and non-type template parameters should follow the rules for
+          <a href="https://hyp-ed.github.io/styleguide/#Variable_Names">
+            variable names</a>.
+
+        </p>
+      </div>
+
+      <h3 id="File_Names" style="left: -46px; position: relative;">File Names<a href="https://hyp-ed.github.io/styleguide/#File_Names" alt="link to File_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Filenames should be all lowercase and can include underscores (<code>_</code>) or dashes
+          (<code>-</code>) for separating words. Underscores are preferred.</p>
+      </div>
+
+      <div class="stylebody">
+
+
+        <p>C++ files should end in
+          <code>.cpp</code> and header files should end in
+          <code>.hpp</code>.
+
+        </p><p>In general, make your filenames very specific. For example, use
+          <code>http_server_logs.hpp</code> rather than
+          <code>logs.hpp</code>. A very common case is to have a pair of files called, e.g.,
+          <code>foo_bar.hpp</code> and
+          <code>foo_bar.cpp</code>, defining a class called
+          <code>FooBar</code>.</p>
+          
+          <p>This rule may not apply in testing. For more information see <a href="https://hyp-ed.github.io/styleguide/#Test_File_Names">Test File Names</a>.</p>
+      </div>
+
+      <h3 id="Type_Names" style="left: -46px; position: relative;">Type Names<a href="https://hyp-ed.github.io/styleguide/#Type_Names" alt="link to Type_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Type names start with a capital letter and have a capital letter for each new word, with no underscores:
+          <code>MyExcitingClass</code>,
+          <code>MyExcitingEnum</code>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>The names of all types — classes, structs, type aliases, enums, and type template parameters
+          — have the same naming convention. Type names should start with a capital letter and have a
+          capital letter for each new word. No underscores. For example:</p>
+
+        <pre>// classes and structs
+class UrlTable { ...
+class UrlTableTester { ...
+struct UrlTableProperties { ...
+
+// typedefs
+typedef hash_map&lt;UrlTableProperties *, string&gt; PropertiesMap;
+
+// using aliases
+using PropertiesMap = hash_map&lt;UrlTableProperties *, string&gt;;
+
+// enums
+enum UrlTableErrors { ...
+</pre>
+
+      </div>
+
+      <h3 id="Variable_Names" style="left: -46px; position: relative;">Variable Names<a href="https://hyp-ed.github.io/styleguide/#Variable_Names" alt="link to Variable_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>The names of variables (including function parameters) and data members are all lowercase, with
+          underscores between words. Data members of classes (but not structs) additionally have trailing
+          underscores. For instance:
+          <code>a_local_variable</code>,
+          <code>a_struct_data_member</code>,
+          <code>a_class_data_member_</code>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <h4 class="stylepoint_subsection">Common Variable names</h4>
+
+        <p>For example:</p>
+
+        <pre>string table_name;  // OK - uses underscore.
+string tablename;   // OK - all lowercase.
+</pre>
+
+        <pre class="badcode">string tableName;   // Bad - mixed case.
+</pre>
+
+        <h4 class="stylepoint_subsection">Class Data Members</h4>
+
+        <p>Data members of classes, both static and non-static, are named like ordinary nonmember variables,
+          but with a trailing underscore.</p>
+
+        <pre>class TableInfo {
+  ...
+ private:
+  string table_name_;  // OK - underscore at end.
+  string tablename_;   // OK.
+  static Pool&lt;TableInfo&gt;* pool_;  // OK.
+};
+</pre>
+
+        <h4 class="stylepoint_subsection">Struct Data Members</h4>
+
+        <p>Data members of structs, both static and non-static, are named like ordinary nonmember variables.
+          They do not have the trailing underscores that data members in classes have.</p>
+
+        <pre>struct UrlTableProperties {
+  string name;
+  int num_entries;
+  static Pool&lt;UrlTableProperties&gt;* pool;
+};
+</pre>
+
+
+        <!--TODO <p>See <a href="#Structs_vs._Classes">Structs vs. Classes </a> for a discussion of when to use
+          a struct versus a class.</p>-->
+
+      </div>
+
+      <h3 id="Constant_Names" style="left: -46px; position: relative;">Constant Names<a href="https://hyp-ed.github.io/styleguide/#Constant_Names" alt="link to Constant_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Variables declared constexpr or const, and whose value is fixed for the duration of the program,
+          are named with a leading "k" followed by mixed case. For example:</p>
+      </div>
+
+      <pre>const int kDaysInAWeek = 7;
+</pre>
+
+      <div class="stylebody">
+
+        <p>All such variables with static storage duration (i.e. statics and globals, see
+          <a href="http://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration">
+            Storage Duration</a> for details) should be named this way. This convention is optional for
+          variables of other storage classes, e.g. automatic variables, otherwise the usual variable
+          naming rules apply.</p>
+        <p>
+
+        </p>
+      </div>
+
+      <h3 id="Function_Names" style="left: -46px; position: relative;">Function Names<a href="https://hyp-ed.github.io/styleguide/#Function_Names" alt="link to Function_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Regular functions have mixed case; accessors and mutators may be named like variables.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>Ordinarily, functions should start with a lowercase letter and have a capital letter for each new
+          word. Such names should not have underscores. Prefer to capitalize acronyms
+          as single words (i.e.
+          <code>readImu()</code>, not
+          <code>readIMU()</code>).</p>
+
+        <pre>addTableEntry()
+deleteUrl()
+openFileOrDie()
+</pre>
+
+      </div>
+
+      <h3 id="Namespace_Names" style="left: -46px; position: relative;">Namespace Names<a href="https://hyp-ed.github.io/styleguide/#Namespace_Names" alt="link to Namespace_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        Namespace names are all lower-case. Top-level namespace names are based on the project name . Avoid collisions
+        between nested namespaces and well-known top-level namespaces.
+      </div>
+
+      <h3 id="Enumerator_Names" style="left: -46px; position: relative;">Enumerator Names<a href="https://hyp-ed.github.io/styleguide/#Enumerator_Names" alt="link to Enumerator_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Enumerators (for both scoped and unscoped enums) should be named like
+          <a href="https://hyp-ed.github.io/styleguide/#Constant_Names">constants</a> (e.g. <code>kEnumName</code>).</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>The individual enumerators should be named like
+          <a href="https://hyp-ed.github.io/styleguide/#Constant_Names">constants</a>.
+          The enumeration name, <code>UrlTableErrors</code>, is a type, and therefore mixed case.</p>
+
+        <pre>enum UrlTableErrors {
+  kOK = 0,
+  kErrorOutOfMemory,
+  kErrorMalformedInput,
+};
+</pre>
+
+      </div>
+
+      <h3 id="Macro_Names" style="left: -46px; position: relative;">Macro Names<a href="https://hyp-ed.github.io/styleguide/#Macro_Names" alt="link to Macro_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>You're not really going to
+          <a href="https://hyp-ed.github.io/styleguide/#Preprocessor_Macros">
+            define a macro</a>, are you? If you do, they're like this:
+          <code>MY_MACRO_THAT_SCARES_SMALL_CHILDREN</code>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p><!--TODO Please see the
+          <a href="#Preprocessor_Macros">description of macros</a>;--> In general macros should
+          <em>not</em> be used. However, if they are needed, then they should be named with all
+          capitals and underscores.</p>
+
+        <pre>#define ROUND(x) ...
+#define PI_ROUNDED 3.0
+</pre>
+
+      </div>
+
+      <h3 id="Exceptions_to_Naming_Rules" style="left: -46px; position: relative;">Exceptions to Naming Rules<a href="https://hyp-ed.github.io/styleguide/#Exceptions_to_Naming_Rules" alt="link to Exceptions_to_Naming_Rules"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>If you are naming something that is analogous to an existing C or C++ entity then you can follow
+          the existing naming convention scheme.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <dl>
+          <dt>
+            <code>bigopen()</code>
+          </dt>
+          <dd>function name, follows form of
+            <code>open()</code>
+          </dd>
+
+          <dt>
+            <code>uint</code>
+          </dt>
+          <dd>
+            <code>typedef</code>
+          </dd>
+
+          <dt>
+            <code>bigpos</code>
+          </dt>
+          <dd>
+            <code>struct</code> or
+            <code>class</code>, follows form of
+            <code>pos</code>
+          </dd>
+
+          <dt>
+            <code>sparse_hash_map</code>
+          </dt>
+          <dd>STL-like entity; follows STL naming conventions</dd>
+
+          <dt>
+            <code>LONGLONG_MAX</code>
+          </dt>
+          <dd>a constant, as in
+            <code>INT_MAX</code>
+          </dd>
+        </dl>
+
+      </div>
+
+<!-------------------------------------------------------------------------------------------------------------------
+  Comments
+-------------------------------------------------------------------------------------------------------------------->
+      <h2 id="Comments" style="left: -46px; position: relative;">Comments<a href="https://hyp-ed.github.io/styleguide/#Comments" alt="link to Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+
+      <p>Code should be documented well. This serves several purposes. Well documented code is easier for others to understand, 
+         which leads to better code maintainability. Furthermore, once a programmer needs to document code, they need to think 
+         about the code structure, design, and functionality. This thinking fosters writing better code in general. Documentation 
+         can also be used to generate html site for easy navigation through project’s APIs.</p>
+
+      <p>Though a pain to write, comments are absolutely vital to keeping our code readable. The following
+        rules describe what you should comment and where. But remember: while comments are very important,
+        the best code is self-documenting. Giving sensible names to types and variables is much better
+        than using obscure names that you must then explain through comments.</p>
+
+      <p>When writing your comments, write for your audience: the next contributor who will need to understand
+        your code. Be generous — the next one may be you!</p>
+
+      <h3 id="Comment_Style" style="left: -46px; position: relative;">Comment Style<a href="https://hyp-ed.github.io/styleguide/#Comment_Style" alt="link to Comment_Style"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use either the
+          <code>//</code> or
+          <code>/* */</code> syntax, as long as you are consistent.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>You can use either the
+          <code>//</code> or the
+          <code>/*
+*/</code> syntax; however,
+          <code>//</code> is
+          <em>much</em> more common. Be consistent with how you comment and what style you use where.</p>
+
+      </div>
+
+      <h3 id="File_Comments" style="left: -46px; position: relative;">File Comments<a href="https://hyp-ed.github.io/styleguide/#File_Comments" alt="link to File_Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>File comments describe the contents of a file. If a file declares, implements, or tests exactly
+          one abstraction that is documented by a comment at the point of declaration, file comments
+          are not required. All other files must have file comments.</p>
+
+      </div>
+
+      <div class="stylebody">
+
+        <h4 class="stylepoint_subsection">Legal Notice and Author Line
+        </h4>
+
+        <p>Every file should start with the following license boilerplate.</p>
+
+        <pre>/*
+ * Author:
+ * Organisation: HYPED
+ * Date: 
+ * Description: &lt;What is this file for?&gt;
+ *
+ *    Copyright 2018 HYPED
+ *    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ *    except in compliance with the License. You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software distributed under
+ *    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ *    either express or implied. See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */</pre>
+
+        <p>If more people contribute to the same file, include all of them on the 'Authors:' line.
+          Consider deleting the line if there is too many authors.
+        </p>
+
+        <h4 class="stylepoint_subsection">File Contents</h4>
+
+        <p>If a
+          <code>.hpp</code> declares multiple abstractions, the file-level comment should broadly describe the contents
+          of the file, and how the abstractions are related. A 1 or 2 sentence file-level comment may
+          be sufficient. The detailed documentation about individual abstractions belongs with those
+          abstractions, not at the file level.</p>
+
+        <p>Do not duplicate comments in both the
+          <code>.hpp</code> and the
+          <code>.cpp</code>. Duplicated comments diverge.</p>
+
+      </div>
+
+      <h3 id="Class_Comments" style="left: -46px; position: relative;">Class Comments<a href="https://hyp-ed.github.io/styleguide/#Class_Comments" alt="link to Class_Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Every non-obvious class declaration should have an accompanying comment that describes what it
+          is for and how it should be used.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <pre>// Iterates over the contents of a GargantuanTable.
+// Example:
+//    GargantuanTableIterator* iter = table-&gt;newIterator();
+//    for (iter-&gt;seek("foo"); !iter-&gt;done(); iter-&gt;next()) {
+//      process(iter-&gt;key(), iter-&gt;value());
+//    }
+//    delete iter;
+class GargantuanTableIterator {
+  ...
+};
+</pre>
+
+        <p>The class comment should provide the reader with enough information to know how and when to use
+          the class, as well as any additional considerations necessary to correctly use the class.</p>
+
+        <p>The class comment is often a good place for a small example code snippet demonstrating a simple
+          and focused usage of the class.</p>
+
+        <p>When sufficiently separated (e.g.
+          <code>.hpp</code> and
+          <code>.cpp</code> files), comments describing the use of the class should go together with its interface definition;
+          comments about the class operation and implementation should accompany the implementation of
+          the class's methods.</p>
+
+      </div>
+
+      <h3 id="Function_Comments" style="left: -46px; position: relative;">Function Comments<a href="https://hyp-ed.github.io/styleguide/#Function_Comments" alt="link to Function_Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Declaration comments describe use of the function (when it is non-obvious); comments at the definition
+          of a function describe operation.
+        </p>
+      </div>
+
+      <div class="stylebody">
+
+        <h4 class="stylepoint_subsection">Function Declarations</h4>
+
+        <p>Almost every function declaration should have comments immediately preceding it that describe
+          what the function does and how to use it. These comments may be omitted only if the function
+          is simple and obvious (e.g. simple accessors for obvious properties of the class). These comments
+          should be descriptive ("Opens the file") rather than imperative ("Open the file"); the comment
+          describes the function, it does not tell the function what to do. In general, these comments
+          do not describe how the function performs its task. Instead, that should be left to comments
+          in the function definition.</p>
+
+        <p>Each function declaration should be preceded by a block comment with a brief description of
+          how the function should be used, descriptions of all input parameters, and explanation of the
+          return value (if any). Implementation description of a method can be further extended at the
+          point of definition.</p>
+
+        <pre>/**
+ * @brief      { function_description }
+ *
+ * @param[in]  c     { parameter_description }
+ * @param[in]  i     { parameter_description }
+ *
+ * @return     { description_of_the_return_value }
+ */
+int foo (char c, int i);
+           </pre>
+
+        <p>However, do not be unnecessarily verbose or state the completely obvious. Notice below that it
+          is not necessary to say "returns false otherwise" because this is implied.
+        </p>
+
+        <pre>/**
+ * @brief Returns true if the table cannot hold any more entries.
+ */
+bool isTableFull();
+</pre>
+
+        <p>When documenting function overrides, focus on the specifics of the override itself, rather than
+          repeating the comment from the overridden function. In many of these cases, the override needs
+          no additional documentation and thus no comment is required.</p>
+
+        <p>When commenting constructors and destructors, remember that the person reading your code knows
+          what constructors and destructors are for, so comments that just say something like "destroys
+          this object" are not useful. Document what constructors do with their arguments (for example,
+          if they take ownership of pointers), and what cleanup the destructor does. If this is trivial,
+          just skip the comment. It is quite common for destructors not to have a header comment.</p>
+
+        <h4 class="stylepoint_subsection">Function Definitions</h4>
+
+        <p>If there is anything tricky about how a function does its job, the function definition should
+          have an explanatory comment. For example, in the definition comment you might describe any
+          coding tricks you use, give an overview of the steps you go through, or explain why you chose
+          to implement the function in the way you did rather than using a viable alternative. For instance,
+          you might mention why it must acquire a lock for the first half of the function but why it
+          is not needed for the second half.</p>
+
+        <p>Note you should
+          <em>not</em> just repeat the comments given with the function declaration, in the
+          <code>.hpp</code> file or wherever. It's okay to recapitulate briefly what the function does, but the focus
+          of the comments should be on how it does it.</p>
+
+      </div>
+
+      <h3 id="Variable_Comments" style="left: -46px; position: relative;">Variable Comments<a href="https://hyp-ed.github.io/styleguide/#Variable_Comments" alt="link to Variable_Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>In general the actual name of the variable should be descriptive enough to give a good idea of
+          what the variable is used for. In certain cases, more comments are required.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <h4 class="stylepoint_subsection">Class Data Members</h4>
+
+        <p>The purpose of each class data member (also called an instance variable or member variable) must
+          be clear. If there are any invariants (special values, relationships between members, lifetime
+          requirements) not clearly expressed by the type and name, they must be commented. However,
+          if the type and name suffice (
+          <code>int
+num_events_;</code>), no comment is needed.</p>
+
+        <p>In particular, add comments to describe the existence and meaning of sentinel values, such as
+          nullptr or -1, when they are not obvious. For example:</p>
+
+        <pre>private:
+ // Used to bounds-check table accesses. -1 means
+ // that we don't yet know how many entries the table has.
+ int num_total_entries_;
+</pre>
+
+        <h4 class="stylepoint_subsection">Global Variables</h4>
+
+        <p>All global variables should have a comment describing what they are, what they are used for,
+          and (if unclear) why it needs to be global. For example:</p>
+
+        <pre>// The total number of tests cases that we run through in this regression test.
+const int kNumTestCases = 6;
+</pre>
+
+      </div>
+
+      <h3 id="Implementation_Comments" style="left: -46px; position: relative;">Implementation Comments<a href="https://hyp-ed.github.io/styleguide/#Implementation_Comments" alt="link to Implementation_Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>In your implementation you should have comments in tricky, non-obvious, interesting, or important
+          parts of your code.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <h4 class="stylepoint_subsection">Explanatory Comments</h4>
+
+        <p>Tricky or complicated code blocks should have comments before them. Example:</p>
+
+        <pre>// Divide result by two, taking into account that x
+// contains the carry from the add.
+for (int i = 0; i &lt; result-&gt;size(); i++) {
+  x = (x &lt;&lt; 8) + (*result)[i];
+  (*result)[i] = x &gt;&gt; 1;
+  x &amp;= 1;
+}
+</pre>
+
+        <h4 class="stylepoint_subsection">Line Comments</h4>
+
+        <p>Also, lines that are non-obvious should get a comment at the end of the line. These end-of-line
+          comments should be separated from the code by 2 spaces. Example:</p>
+
+        <pre>// If we have enough memory, mmap the data portion too.
+mmap_budget = max&lt;int64&gt;(0, mmap_budget - index_-&gt;length());
+if (mmap_budget &gt;= data_size_ &amp;&amp; !MmapData(mmap_chunk_bytes, mlock))
+  return;  // Error already logged.
+</pre>
+
+        <p>Note that there are both comments that describe what the code is doing, and comments that mention
+          that an error has already been logged when the function returns.
+        </p>
+
+        <p>If you have several comments on subsequent lines, it can often be more readable to line them
+          up:</p>
+
+        <pre>doSomething();                  // Comment here so the comments line up.
+doSomethingElseThatIsLonger();  // Two spaces between the code and the comment.
+{ // One space before comment when opening a new scope is allowed,
+  // thus the comment lines up with the following comments and code.
+  doSomethingElse();  // Two spaces before line comments normally.
+}
+std::vector&lt;string&gt; list{
+                    // Comments in braced lists describe the next element...
+                    "First item",
+                    // .. and should be aligned appropriately.
+                    "Second item"};
+</pre>
+
+        <h4 class="stylepoint_subsection">Function Argument Comments</h4>
+
+        <p>When the meaning of a function argument is nonobvious, consider one of the following remedies:</p>
+
+        <ul>
+          <li>If the argument is a literal constant, and the same constant is used in multiple function calls
+            in a way that tacitly assumes they're the same, you should use a named constant to make that
+            constraint explicit, and to guarantee that it holds.</li>
+
+          <li>Consider changing the function signature to replace a
+            <code>bool</code> argument with an
+            <code>enum</code> argument. This will make the argument values self-describing.</li>
+
+          <li>For functions that have several configuration options, consider defining a single class or
+            struct to hold all the options , and pass an instance of that. This approach has several
+            advantages. Options are referenced by name at the call site, which clarifies their meaning.
+            It also reduces function argument count, which makes function calls easier to read and write.
+            As an added benefit, you don't have to change call sites when you add another option.
+          </li>
+
+          <li>Replace large or complex nested expressions with named variables.</li>
+
+          <li>As a last resort, use comments to clarify argument meanings at the call site.</li>
+        </ul>
+
+        Consider the following example:
+
+        <pre class="badcode">// What are these arguments?
+const DecimalNumber product = calculateProduct(values, 7, false, nullptr);
+</pre>
+
+        <p>versus:</p>
+
+        <pre>ProductOptions options;
+options.set_precision_decimals(7);
+options.set_use_cache(ProductOptions::kDontUseCache);
+const DecimalNumber product =
+    calculateProduct(values, options, /*completion_callback=*/nullptr);
+</pre>
+
+        <h4 class="stylepoint_subsection">Don'ts</h4>
+
+        <p>Do not state the obvious. In particular, don't literally describe what code does, unless the
+          behavior is nonobvious to a reader who understands C++ well. Instead, provide higher level
+          comments that describe
+          <i>why</i>
+          the code does what it does, or make the code self describing.</p>
+
+        Compare this:
+
+        <pre class="badcode">// Find the element in the vector.  &lt;-- Bad: obvious!
+auto iter = std::find(v.begin(), v.end(), element);
+if (iter != v.end()) {
+  process(element);
+}
+</pre> To this:
+
+        <pre>// Process "element" unless it was already processed.
+auto iter = std::find(v.begin(), v.end(), element);
+if (iter != v.end()) {
+  process(element);
+}
+</pre> Self-describing code doesn't need a comment. The comment from the example above would be obvious:
+
+        <pre>if (!isAlreadyProcessed(element)) {
+  process(element);
+}
+</pre>
+
+      </div>
+
+      <h3 id="Punctuation,_Spelling_and_Grammar" style="left: -46px; position: relative;">Punctuation, Spelling and Grammar<a href="https://hyp-ed.github.io/styleguide/#Punctuation,_Spelling_and_Grammar" alt="link to Punctuation,_Spelling_and_Grammar"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Pay attention to punctuation, spelling, and grammar; it is easier to read well-written comments
+          than badly written ones.
+        </p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>Comments should be as readable as narrative text, with proper capitalization and punctuation.
+          In many cases, complete sentences are more readable than sentence fragments. Shorter comments,
+          such as comments at the end of a line of code, can sometimes be less formal, but you should
+          be consistent with your style.</p>
+
+        <p>Although it can be frustrating to have a code reviewer point out that you are using a comma when
+          you should be using a semicolon, it is very important that source code maintain a high level
+          of clarity and readability. Proper punctuation, spelling, and grammar help with that goal.
+        </p>
+
+      </div>
+
+      <h3 id="TODO_Comments" style="left: -46px; position: relative;">TODO Comments<a href="https://hyp-ed.github.io/styleguide/#TODO_Comments" alt="link to TODO_Comments"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use
+          <code>TODO</code> comments for code that is temporary, a short-term solution, or good-enough but not perfect.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>
+          <code>TODO</code>s should include the string
+          <code>TODO</code> in all caps, followed by the name, e-mail address, bug ID, or other identifier of the person
+          or issue with the best context about the problem referenced by the
+          <code>TODO</code>. The main purpose is to have a consistent
+          <code>TODO</code> that can be searched to find out how to get more details upon request. A
+          <code>TODO</code> is not a commitment that the person referenced will fix the problem. Thus when you create
+          a
+          <code>TODO</code> with a name, it is almost always your name that is given.</p>
+
+
+
+        <div>
+          <pre>// TODO(kl@gmail.com): Use a "*" here for concatenation operator.
+// TODO(Zeke) change this to use relations.
+// TODO(bug 12345): remove the "Last visitors" feature
+</pre>
+        </div>
+
+        <p>If your
+          <code>TODO</code> is of the form "At a future date do something" make sure that you either include a very specific
+          date ("Fix by November 2005") or a very specific event ("Remove this code when all clients
+          can handle XML responses.").</p>
+
+      </div>
+
+<!-------------------------------------------------------------------------------------------------------------------
+  Formatting
+-------------------------------------------------------------------------------------------------------------------->
+      <h2 id="Formatting" style="left: -46px; position: relative;">Formatting<a href="https://hyp-ed.github.io/styleguide/#Formatting" alt="link to Formatting"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+
+      <p>Coding style and formatting are pretty arbitrary, but a project is much easier to follow if everyone
+        uses the same style. Individuals may not agree with every aspect of the formatting rules, and
+        some of the rules may take some getting used to, but it is important that all project contributors
+        follow the style rules so that they can all read and understand everyone's code easily.</p>
+
+      <h3 id="Line_Length" style="left: -46px; position: relative;">Line Length<a href="https://hyp-ed.github.io/styleguide/#Line_Length" alt="link to Line_Length"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Each line of text in your code should be at most 100 characters long.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>We are innovative so we will not stick to the old 80-character limit.</p>
+
+        <div class="pros">
+          <p>Proponents argue that a wider line can make code more readable. The 80-column limit
+            is an hidebound throwback to 1960s mainframes; modern equipment has wide screens that can
+            easily show longer lines.</p>
+          <p>More focus on descriptive names also makes lines longer than they were in the past.</p>
+        </div>
+
+        <div class="cons">
+          <p>Those in  favor of 80 characters argue that it is rude to force them to resize their windows and there
+            is no need for anything longer. Some folks are used to having several code windows side-by-side,
+            and thus don't have room to widen their windows in any case. People set up their work environment
+            assuming a particular maximum window width, and 80 columns has been the traditional standard.
+            Why change it?
+          </p>
+        </div>
+
+        <div class="decision">
+          <p> 100 characters is the maximum.</p>
+
+          <p class="exception">Comment lines can be longer than 100 characters if it is not feasible to split them without
+            harming readability, ease of cut and paste or auto-linking -- e.g. if a line contains an
+            example command or a literal URL longer than 100 characters.</p>
+
+          <p class="exception">A raw-string literal may have content that exceeds 100 characters. Except for test code, such
+            literals should appear near the top of a file.</p>
+
+          <p class="exception">An
+            <code>#include</code> statement with a long path may exceed 100 columns.</p>
+
+          <p class="exception">You needn't be concerned about
+            <a href="https://hyp-ed.github.io/styleguide/#The__define_Guard">header guards</a> that exceed the maximum length. </p>
+        </div>
+
+      </div>
+
+      <h3 id="Spaces_vs._Tabs" style="left: -46px; position: relative;">Spaces vs. Tabs<a href="https://hyp-ed.github.io/styleguide/#Spaces_vs._Tabs" alt="link to Spaces_vs._Tabs"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use only spaces, and indent 2 spaces at a time.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>Do not use tabs in your code. You should set your editor to emit
+          spaces when you hit the tab key.</p>
+
+      </div>
+
+      <h3 id="Function_Declarations_and_Definitions" style="left: -46px; position: relative;">Function Declarations and Definitions<a href="https://hyp-ed.github.io/styleguide/#Function_Declarations_and_Definitions" alt="link to Function_Declarations_and_Definitions"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Return type on the same line as function name, parameters on the same line if they fit. Wrap
+          parameter lists which do not fit on a single line as you would wrap arguments in a
+          <a href="https://hyp-ed.github.io/styleguide/#Function_Calls">function call</a>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>Functions look like this:</p>
+
+        <pre>ReturnType ClassName::functionName(Type par_name1, Type par_name2)
+{
+  doSomething();
+  ...
+}
+</pre>
+
+        <p>If you have too much text to fit on one line:</p>
+
+        <pre>ReturnType ClassName::reallyLongFunctionName(Type par_name1, Type par_name2,
+                                             Type par_name3)
+{
+  doSomething();
+  ...
+}
+</pre>
+
+        <p>or if you cannot fit even the first parameter:</p>
+
+        <pre>ReturnType LongClassName::reallyReallyReallyLongFunctionName(
+    Type par_name1,  // 4 space indent
+    Type par_name2,
+    Type par_name3)
+{
+  doSomething();  // 2 space indent
+  ...
+}
+</pre>
+
+        <p>Some points to note:</p>
+
+        <ul>
+          <li>Choose good parameter names.</li>
+
+          <li>If you cannot fit the return type and the function name on a single line, break between them.</li>
+
+          <li>If you break after the return type of a function declaration or definition, do not indent.</li>
+
+          <li>The open parenthesis is always on the same line as the function name.</li>
+
+          <li>There is never a space between the function name and the open parenthesis.</li>
+
+          <li>There is never a space between the parentheses and the parameters.</li>
+
+          <li>The open curly brace is always on a separate line after the function declaration and before
+            the body.</li>
+
+          <li>The close curly brace is on the last line by itself.</li>
+
+          <li>All parameters should be aligned if possible.</li>
+
+          <li>Default indentation is 2 spaces.</li>
+
+          <li>Wrapped parameters have a 4 space indent.</li>
+        </ul>
+
+      </div>
+
+      <h3 id="Function_Calls" style="left: -46px; position: relative;">Function Calls<a href="https://hyp-ed.github.io/styleguide/#Function_Calls" alt="link to Function_Calls"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Either write the call all on a single line, wrap the arguments at the parenthesis, or start the
+          arguments on a new line indented by four spaces and continue at that 4 space indent. In the
+          absence of other considerations, use the minimum number of lines, including placing multiple
+          arguments on each line where appropriate.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>Function calls have the following format:</p>
+        <pre>bool result = doSomething(argument1, argument2, argument3);
+</pre>
+
+        <p>If the arguments do not all fit on one line, they should be broken up onto multiple lines, with
+          each subsequent line aligned with the first argument. Do not add spaces after the open paren
+          or before the close paren:
+        </p>
+        <pre>bool result = doSomething(averyveryveryverylongargument1,
+                          argument2, argument3);
+</pre>
+
+        <p>Arguments may optionally all be placed on subsequent lines with a four space indent:</p>
+        <pre>if (...) {
+  ...
+  ...
+  if (...) {
+    bool result = doSomething(
+        argument1, argument2,  // 4 space indent
+        argument3, argument4);
+    ...
+  }
+</pre>
+
+        <p>Put multiple arguments on a single line to reduce the number of lines necessary for calling a
+          function unless there is a specific readability problem. Some find that formatting with strictly
+          one argument on each line is more readable and simplifies editing of the arguments. However,
+          we prioritize for the reader over the ease of editing arguments, and most readability problems
+          are better addressed with the following techniques.</p>
+
+        <p>If having multiple arguments in a single line decreases readability due to the complexity or
+          confusing nature of the expressions that make up some arguments, try creating variables that
+          capture those arguments in a descriptive name:</p>
+        <pre>int my_heuristic = scores[x] * y + bases[x];
+bool result = doSomething(my_heuristic, x, y, z);
+</pre>
+
+        <p>Or put the confusing argument on its own line with an explanatory comment:</p>
+        <pre>bool result = doSomething(scores[x] * y + bases[x],  // Score heuristic.
+                          x, y, z);
+</pre>
+
+        <p>If there is still a case where one argument is significantly more readable on its own line, then
+          put it on its own line. The decision should be specific to the argument which is made more
+          readable rather than a general policy.</p>
+
+        <p>Sometimes arguments form a structure that is important for readability. In those cases, feel
+          free to format the arguments according to that structure:</p>
+        <pre>// Transform the widget by a 3x3 matrix.
+my_widget.transform(x1, x2, x3,
+                    y1, y2, y3,
+                    z1, z2, z3);
+</pre>
+
+      </div>
+
+      <h3 id="Braced_Initializer_List_Format" style="left: -46px; position: relative;">Braced Initializer List Format<a href="https://hyp-ed.github.io/styleguide/#Braced_Initializer_List_Format" alt="link to Braced_Initializer_List_Format"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Format a
+          <!--TODO a href="#Braced_Initializer_List"-->braced initializer list<!--/a-->
+          exactly like you would format a function call in its place.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>If the braced list follows a name (e.g. a type or variable name), format as if the
+          <code>{}</code> were the parentheses of a function call with that name. If there is no name, assume a zero-length
+          name.</p>
+
+        <pre>// Examples of braced init list on a single line.
+return {foo, bar};
+functioncall({foo, bar});
+std::pair&lt;int, int&gt; p{foo, bar};
+
+// When you have to wrap.
+someFunction(
+    {"assume a zero-length name before {"},
+    some_other_function_parameter);
+SomeType variable{
+    some, other, values,
+    {"assume a zero-length name before {"},
+    SomeOtherType{
+        "Very long string requiring the surrounding breaks.",
+        some, other values},
+    SomeOtherType{"Slightly shorter string",
+                  some, other, values}};
+SomeType variable{
+    "This is too long to fit all in one line"};
+MyType m = {  // Here, you could also break before {.
+    superlongvariablename1,
+    superlongvariablename2,
+    {short, interior, list},
+    {interiorwrappinglist,
+     interiorwrappinglist2}};
+</pre>
+
+      </div>
+
+      <h3 id="Conditionals" style="left: -46px; position: relative;">Conditionals<a href="https://hyp-ed.github.io/styleguide/#Conditionals" alt="link to Conditionals"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Do not add spaces between the parentheses and the condition. The <code>if</code> and
+          <code>else</code> keywords belong on separate lines.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <pre>if (condition) {  // no spaces inside parentheses
+  ...  // 2 space indent.
+} else if (...) {  // The else goes on the same line as the closing brace.
+  ...
+} else {
+  ...
+}
+</pre>
+
+        <p>Do not add spaces inside the parentheses:
+        </p>
+
+        <pre class="badcode">if ( condition ) {  // Bad - spaces inside parentheses
+  ...  // 2 space indent.
+}
+</pre>
+
+        <p>Note that in all cases you must have a space between the
+          <code>if</code> and the open parenthesis. You must also have a space between the close parenthesis and the
+          curly brace, if you're using one.</p>
+
+        <pre class="badcode">if(condition) {   // Bad - space missing after IF.
+if (condition){   // Bad - space missing before {.
+if(condition){    // Doubly bad.
+</pre>
+
+        <pre>if (condition) {  // Good - proper space after IF and before {.
+</pre>
+
+        <p>Short conditional statements may be written on one line if this enhances readability. You may
+          use this only when the line is brief and the statement does not use the
+          <code>else</code> clause.</p>
+
+        <pre>if (x == kFoo) return new Foo();
+if (x == kBar) return new Bar();
+</pre>
+
+        <p>This is not allowed when the if statement has an
+          <code>else</code>:</p>
+
+        <pre class="badcode">// Not allowed - IF statement on one line when there is an ELSE clause
+if (x) doThis();
+else doThat();
+</pre>
+
+        <p>In general, curly braces are not required for single-line statements, but they are allowed if
+          you like them; conditional or loop statements with complex conditions or statements may be
+          more readable with curly braces.
+        </p>
+
+        <pre>if (condition)
+  doSomething();  // 2 space indent.
+
+if (condition) {
+  doSomething();  // 2 space indent.
+}
+</pre>
+
+        <p>However, if one part of an
+          <code>if</code>-
+          <code>else</code> statement uses curly braces, the other part must too:</p>
+
+        <pre class="badcode">// Not allowed - curly on IF but not ELSE
+if (condition) {
+  foo;
+} else
+  bar;
+
+// Not allowed - curly on ELSE but not IF
+if (condition)
+  foo;
+else {
+  bar;
+}
+</pre>
+
+        <pre>// Curly braces around both IF and ELSE required because
+// one of the clauses used braces.
+if (condition) {
+  foo;
+} else {
+  bar;
+}
+
+//Also allowed:
+if (condition)
+  foo;
+else
+  bar;
+</pre>
+
+      </div>
+
+      <h3 id="Loops_and_Switch_Statements" style="left: -46px; position: relative;">Loops and Switch Statements<a href="https://hyp-ed.github.io/styleguide/#Loops_and_Switch_Statements" alt="link to Loops_and_Switch_Statements"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Switch statements may use braces for blocks. Annotate non-trivial fall-through between cases.
+          Braces are optional for single-statement loops. Empty loop bodies should use empty braces or
+          <code>continue</code>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>
+          <code>case</code> blocks in
+          <code>switch</code> statements can have curly braces or not, depending on your preference. If you do include curly
+          braces they should be placed as shown below.</p>
+
+        <p>If not conditional on an enumerated value, switch statements should always have a
+          <code>default</code> case (in the case of an enumerated value, the compiler will warn you if any values are not
+          handled). If the default case should never execute, simply
+          <code>assert</code>:</p>
+
+
+
+        <div>
+          <pre>switch (var) {
+  case 0: {  // 2 space indent
+    ...      // 4 space indent
+    break;
+  }
+  case 1: {
+    ...
+    break;
+  }
+  default: {
+    assert(false);
+  }
+}
+</pre>
+        </div>
+
+        <p> Braces are optional for single-statement loops.</p>
+
+        <pre>for (int i = 0; i &lt; kSomeNumber; ++i)
+  printf("I love you\n");
+
+for (int i = 0; i &lt; kSomeNumber; ++i) {
+  printf("I take it back\n");
+}
+</pre>
+
+        <p>Empty loop bodies should use an empty pair of braces or
+          <code>continue</code>, but not a single semicolon.</p>
+
+        <pre>while (condition) {
+  // Repeat test until it returns false.
+}
+for (int i = 0; i &lt; kSomeNumber; ++i) {}  // Good - one newline is also OK.
+while (condition) continue;  // Good - continue indicates no logic.
+</pre>
+
+        <pre class="badcode">while (condition);  // Bad - looks like part of do/while loop.
+</pre>
+
+      </div>
+
+      <h3 id="Pointer_and_Reference_Expressions" style="left: -46px; position: relative;">Pointer and Reference Expressions<a href="https://hyp-ed.github.io/styleguide/#Pointer_and_Reference_Expressions" alt="link to Pointer_and_Reference_Expressions"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>No spaces around period or arrow. Pointer operators do not have trailing spaces.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>The following are examples of correctly-formatted pointer and reference expressions:</p>
+
+        <pre>x = *p;
+p = &amp;x;
+x = r.y;
+x = r-&gt;y;
+</pre>
+
+        <p>Note that:</p>
+
+        <ul>
+          <li>There are no spaces around the period or arrow when accessing a member.</li>
+
+          <li>Pointer operators have no space after the
+            <code>*</code> or
+            <code>&amp;</code>.</li>
+        </ul>
+
+        <p>When declaring a pointer variable or argument, place the asterisk adjacent to the type:</p>
+
+        <pre>char* c;
+const string&amp; str;
+</pre> It is allowed (if unusual) to declare multiple variables in the same declaration, but it is
+        disallowed if any of those have pointer or reference decorations. Such declarations are easily
+        misread.
+        <pre>// Fine if helpful for readability.
+int x, y;
+</pre>
+        <pre class="badcode">int x, *y;  // Disallowed - no &amp; or * in multiple declaration
+char * c;  // Bad - spaces on both sides of *
+const string &amp; str;  // Bad - spaces on both sides of &amp;
+</pre>
+
+      </div>
+
+      <h3 id="Boolean_Expressions" style="left: -46px; position: relative;">Boolean Expressions<a href="https://hyp-ed.github.io/styleguide/#Boolean_Expressions" alt="link to Boolean_Expressions"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>When you have a boolean expression that is longer than the
+          <a href="https://hyp-ed.github.io/styleguide/#Line_Length">standard line length</a>, be consistent in how you break up the lines.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>In this example, the logical AND operator is always at the end of the lines:</p>
+
+        <pre>if (this_one_thing &gt; this_other_thing &amp;&amp;
+    a_third_thing == a_fourth_thing &amp;&amp;
+    yet_another &amp;&amp; last_one) {
+  ...
+}
+</pre>
+
+        <p>Note that when the code wraps in this example, both of the
+          <code>&amp;&amp;</code> logical AND operators are at the end of the line. This is preferred, though
+          wrapping all operators at the beginning of the line is also allowed. Feel free to insert extra
+          parentheses judiciously because they can be very helpful in increasing readability when used
+          appropriately. Also note that you should always use the punctuation operators, such as
+          <code>&amp;&amp;</code> and
+          <code>~</code>, rather than the word operators, such as
+          <code>and</code> and
+          <code>compl</code>.</p>
+
+      </div>
+
+      <h3 id="Return_Values" style="left: -46px; position: relative;">Return Values<a href="https://hyp-ed.github.io/styleguide/#Return_Values" alt="link to Return_Values"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Do not needlessly surround the
+          <code>return</code> expression with parentheses.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <pre class="badcode">return (value);                // You wouldn't write var = (value);
+return(result);                // return is not a function!
+</pre>
+
+      </div>
+
+
+
+      <h3 id="Variable_and_Array_Initialization" style="left: -46px; position: relative;">Variable and Array Initialization<a href="https://hyp-ed.github.io/styleguide/#Variable_and_Array_Initialization" alt="link to Variable_and_Array_Initialization"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Your choice of
+          <code>=</code>,
+          <code>()</code>, or
+          <code>{}</code>.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>You may choose between
+          <code>=</code>,
+          <code>()</code>, and
+          <code>{}</code>; the following are all correct:</p>
+
+        <pre>int x = 3;
+int x(3);
+int x{3};
+string name = "Some Name";
+string name("Some Name");
+string name{"Some Name"};
+</pre>
+
+        <!--TODO braced init list usage-->
+        <p>Be careful when using a braced initialization list
+          <code>{...}</code> on a type with an
+          <code>std::initializer_list</code> constructor. A nonempty
+          <i>braced-init-list</i> prefers the
+          <code>std::initializer_list</code> constructor whenever possible. Note that empty braces
+          <code>{}</code> are special, and will call a default constructor if available. To force the non-
+          <code>std::initializer_list</code> constructor, use parentheses instead of braces.</p>
+
+        <pre>std::vector&lt;int&gt; v(100, 1);  // A vector of 100 1s.
+std::vector&lt;int&gt; v{100, 1};  // A vector of 100, 1.
+</pre>
+
+        <p>Also, the brace form prevents narrowing of integral types. This can prevent some types of programming
+          errors.
+        </p>
+
+        <pre>int pi(3.14);  // OK -- pi == 3.
+int pi{3.14};  // Compile error: narrowing conversion.
+</pre>
+
+      </div>
+
+      <h3 id="Preprocessor_Directives" style="left: -46px; position: relative;">Preprocessor Directives<a href="https://hyp-ed.github.io/styleguide/#Preprocessor_Directives" alt="link to Preprocessor_Directives"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>The hash mark that starts a preprocessor directive should always be at the beginning of the line.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>Even when preprocessor directives are within the body of indented code, the directives should
+          start at the beginning of the line.</p>
+
+        <pre>// Good - directives at beginning of line
+  if (lopsided_score) {
+#if DISASTER_PENDING      // Correct -- Starts at beginning of line
+    dropEverything();
+# if NOTIFY               // OK but not required -- Spaces after #
+    notifyClient();
+# endif
+#endif
+    backToNormal();
+  }
+</pre>
+
+        <pre class="badcode">// Bad - indented directives
+  if (lopsided_score) {
+    #if DISASTER_PENDING  // Wrong!  The "#if" should be at beginning of line
+    dropEverything();
+    #endif                // Wrong!  Do not indent "#endif"
+    backToNormal();
+  }
+</pre>
+
+      </div>
+
+      <h3 id="Class_Format" style="left: -46px; position: relative;">Class Format<a href="https://hyp-ed.github.io/styleguide/#Class_Format" alt="link to Class_Format"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Sections in
+          <code>public</code>,
+          <code>protected</code> and
+          <code>private</code> order, each indented one space.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>The basic format for a class definition (lacking the comments, see
+          <a href="https://hyp-ed.github.io/styleguide/#Class_Comments">Class Comments
+          </a> for a discussion of what comments are needed) is:</p>
+
+        <pre>class MyClass : public OtherClass {
+ public:      // Note the 1 space indent!
+  MyClass();  // Regular 2 space indent.
+  explicit MyClass(int var);
+  ~MyClass() {}
+
+  void someFunction();
+  void someFunctionThatDoesNothing()
+  {}
+
+  void set_some_var(int var) { some_var_ = var; }
+  int get_some_var() const { return some_var_; }
+
+ private:
+  bool someInternalFunction();
+
+  int some_var_;
+  int some_other_var_;
+};
+</pre>
+
+        <p>Things to note:</p>
+
+        <ul>
+          <li>Any base class name should be on the same line as the subclass name, subject to the 100-column
+            limit.</li>
+
+          <li>The
+            <code>public:</code>,
+            <code>protected:</code>, and
+            <code>private:</code> keywords should be indented one space.</li>
+
+          <li>Except for the first instance, these keywords should be preceded by a blank line. This rule
+            is optional in small classes.</li>
+
+          <li>Do not leave a blank line after these keywords.
+          </li>
+
+          <li>The
+            <code>public</code> section should be first, followed by the
+            <code>protected</code> and finally the
+            <code>private</code> section.</li>
+
+          <li>See
+            <a href="https://hyp-ed.github.io/styleguide/#Declaration_Order">Declaration Order
+            </a> for rules on ordering declarations within each of these sections.</li>
+        </ul>
+
+      </div>
+
+      <h3 id="Constructor_Initializer_Lists" style="left: -46px; position: relative;">Constructor Initializer Lists<a href="https://hyp-ed.github.io/styleguide/#Constructor_Initializer_Lists" alt="link to Constructor_Initializer_Lists"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Constructor initializer lists can be all on one line or with subsequent lines indented four spaces.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>The acceptable formats for initializer lists are:</p>
+
+        <pre>// When everything fits on one line:
+MyClass::MyClass(int var) : some_var_(var)
+{
+  doSomething();
+}
+
+// If the signature and initializer list are not all on one line,
+// you must wrap before the colon and indent 4 spaces:
+MyClass::MyClass(int var)
+    : some_var_(var), some_other_var_(var + 1)
+{
+  doSomething();
+}
+
+// When the list spans multiple lines, put each member on its own line
+// and align them:
+MyClass::MyClass(int var)
+    : some_var_(var),           // 4 space indent
+      some_other_var_(var + 1)  // lined up
+{
+  doSomething();
+}
+</pre>
+
+      </div>
+
+      <h3 id="Namespace_Formatting" style="left: -46px; position: relative;">Namespace Formatting<a href="https://hyp-ed.github.io/styleguide/#Namespace_Formatting" alt="link to Namespace_Formatting"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>The contents of namespaces are not indented.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>
+          <a href="https://hyp-ed.github.io/styleguide/#Namespaces">Namespaces</a> do not add an extra level of indentation. For example, use:</p>
+
+        <pre>namespace {
+
+void foo() {  // Correct.  No extra indentation within namespace.
+  ...
+}
+
+}  // namespace
+</pre>
+
+        <p>Do not indent within a namespace:</p>
+
+        <pre class="badcode">namespace {
+
+  // Wrong.  Indented when it should not be.
+  void foo() {
+    ...
+  }
+
+}  // namespace
+</pre>
+
+        <p>When declaring nested namespaces, put each namespace on its own line.</p>
+
+        <pre>namespace foo {
+namespace bar {
+</pre>
+<p>Terminate namespaces with comments.</p>
+    <pre>// In the .hpp file
+namespace mynamespace {
+
+class MyClass {
+public:
+...
+void Foo();
+};
+
+}  // namespace mynamespace
+</pre>
+
+    <pre>// In the .cpp file
+namespace mynamespace {
+
+void MyClass::Foo() {
+...
+}
+
+}  // namespace mynamespace
+</pre>
+
+      </div>
+
+      <h3 id="Horizontal_Whitespace" style="left: -46px; position: relative;">Horizontal Whitespace<a href="https://hyp-ed.github.io/styleguide/#Horizontal_Whitespace" alt="link to Horizontal_Whitespace"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use of horizontal whitespace depends on location. Never put trailing whitespace at the end of
+          a line.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <h4 class="stylepoint_subsection">General</h4>
+
+        <pre>void f(bool b)
+{
+  ...
+int i = 0;  // Semicolons have no space before them.
+// Spaces inside braces for braced-init-list are optional.  If you use them,
+// put them on both sides!
+int x[] = { 0 };
+int x[] = {0};
+
+// Spaces around the colon in inheritance and initializer lists.
+class Foo : public Bar {
+ public:
+  // For inline function implementations, put spaces between the braces
+  // and the implementation itself.
+  Foo(int b) : Bar(), baz_(b)
+  {}  // No spaces inside empty braces.
+  void reset() { baz_ = 0; }  // Spaces separating braces from implementation.
+  ...
+</pre>
+
+        <p>Adding trailing whitespace can cause extra work for others editing the same file, when they merge,
+          as can removing existing trailing whitespace. So: Don't introduce trailing whitespace. Remove
+          it if you're already changing that line, or do it in a separate clean-up operation (preferably
+          when no-one else is working on the file).</p>
+
+        <h4 class="stylepoint_subsection">Loops and Conditionals</h4>
+
+        <pre>if (b) {          // Space after the keyword in conditions and loops.
+} else {          // Spaces around else.
+}
+while (test) {}   // There is usually no space inside parentheses.
+
+switch (i) {
+for (int i = 0; i &lt; 5; ++i) {
+
+// For loops always have a space after the semicolon.  They may have a space
+// before the semicolon, but this is rare.
+for ( ; i &lt; 5 ; ++i) {
+  ...
+
+// Range-based for loops always have a space before and after the colon.
+for (auto x : counts) {
+  ...
+}
+switch (i) {
+  case 1:         // No space before colon in a switch case.
+    ...
+  case 2: break;  // Use a space after a colon if there's code after it.
+</pre>
+
+        <h4 class="stylepoint_subsection">Operators</h4>
+
+        <pre>// Assignment operators always have spaces around them.
+x = 0;
+
+// Other binary operators usually have spaces around them, but it's
+// OK to remove spaces around factors.  Parentheses should have no
+// internal padding.
+v = w * x + y / z;
+v = w*x + y/z;
+v = w * (x + z);
+
+// No spaces separating unary operators and their arguments.
+x = -5;
+++x;
+if (x &amp;&amp; !y)
+  ...
+</pre>
+
+        <h4 class="stylepoint_subsection">Templates and Casts</h4>
+
+        <pre>// No spaces inside the angle brackets (&lt; and &gt;), before
+// &lt;, or between &gt;( in a cast
+std::vector&lt;string&gt; x;
+y = static_cast&lt;char*&gt;(x);
+
+// Spaces between type and pointer are OK, but be consistent.
+std::vector&lt;char *&gt; x;
+</pre>
+
+      </div>
+
+      <h3 id="Vertical_Whitespace" style="left: -46px; position: relative;">Vertical Whitespace<a href="https://hyp-ed.github.io/styleguide/#Vertical_Whitespace" alt="link to Vertical_Whitespace"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Minimize use of vertical whitespace.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>This is more a principle than a rule: don't use blank lines when you don't have to. In particular,
+          don't put more than one or two blank lines between functions, resist starting functions with
+          a blank line, don't end functions with a blank line, and be discriminating with your use of
+          blank lines inside functions.</p>
+
+        <p>The basic principle is: The more code that fits on one screen, the easier it is to follow and
+          understand the control flow of the program. Of course, readability can suffer from code being
+          too dense as well as too spread out, so use your judgement. But in general, minimize use of
+          vertical whitespace.</p>
+
+        <p>Some rules of thumb to help when blank lines may be useful:
+        </p>
+
+        <ul>
+          <li>Blank lines at the beginning or end of a function very rarely help readability.</li>
+
+          <li>Blank lines inside a chain of if-else blocks may well help readability.</li>
+        </ul>
+
+      </div>
+
+<!-------------------------------------------------------------------------------------------------------------------
+  TESTING
+-------------------------------------------------------------------------------------------------------------------->
+<h2 id="Testing" style="left: -46px; position: relative;">Testing<a href="https://hyp-ed.github.io/styleguide/#Testing" alt="link to Testing"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+      
+<p>This section contains the style conventions <em>specifically for creating tests</em>. This covers all forms 
+   of tests in the HYPED Codebase, please read this carefully before beginning testing.</p>
+  
+  <!-- Test Names -->
+  <h3 id="Test Names" style="left: -46px; position: relative">Test names<a href="https://hyp-ed.github.io/styleguide/#Test%20Names" alt="link to Test Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+  <div class="summary">
+    <p>Test names should be written in <em><b>camelCase with the name beginning with a verb and first letter lowercased
+       then following CamelCase afterwards</b></em> 
+       This closely follows the Google primer style guide for names of tests. Which is what a lot
+       of the testing style's are inspired from
+    </p>
+  </div>  
+  <div class="stylebody">
+    <pre class="badcode">// Bad- spaced using underscores, capitalisation is inconsistent
+TEST_F(DifferentiatorFunctionality, handles_zero_Input) {
+...
+}
+    </pre>
+    <pre>// Good - correct spacing convention, capitalisation is consistent
+TEST_F(DifferentiatorFunctionality, handlesZeroInput){
+...
+}
+    </pre>            
+  </div>
+
+<!-- Test File names -->
+<h3 id="Test_File_Names" style="left: -46px; position: relative">Test file names<a href="https://hyp-ed.github.io/styleguide/#Test_File_Names" alt="link to Test_File_Names"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+<div class="summary">
+  <p> There is one special rule for the naming of test files. They should all end in .test.cpp </p>
+  <p> NOTE: That is not going to change the file type from a typical .cpp file it is just a naming
+      convention commonly used for testing and allows for people to see instantly that it is a test files
+  </p>
+  <pre class="badcode">// Bad file name
+differentiator_test.cpp
+  </pre>
+  <pre>// Good file name
+differentiator.test.cpp
+  </pre>
+</div>
+<!-- Test Fixtures -->
+  <h3 id="Test Fixtures" style="left: -46px; position: relative">Test Fixtures<a href="https://hyp-ed.github.io/styleguide/#Test%20Fixtures" alt="link to Test Fixtures"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+  <div class="summary">
+    <p> We have two styling rules for test fixtures:
+      </p><ul>
+        <li>Firstly test fixtures <em><b>must be structs</b></em></li>
+        <li>
+            Secondly test fixtures <em><b>must begin with a capital letter</b></em> and then <em><b>follow 
+            camel case styling for capitalisation</b></em><p></p>
+        </li>
+      </ul>              
+  </div>
+
+  <div class="stylebody">
+    <pre class="badcode">// Bad - wrong capitalisation
+struct differentiatorFunctionality : public ::testing::Test {
+...
+}
+    </pre>
+    <pre>// Good - capitalisation correct
+struct DifferentiatorFunctionality : public ::testing::Test {
+...
+}
+    </pre>
+  </div>
+  
+  <!-- Test Fixture Variables vs Local Test Variable -->
+  <h3 id="Test Fixture Variables vs Local Test Variables" style="left: -46px; position: relative">Test fixture variables vs local test variables<a href="https://hyp-ed.github.io/styleguide/#Test%20Fixture%20Variables%20vs%20Local%20Test%20Variables" alt="link to Test Fixture Variables vs Local Test Variables"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+  <div class="stylebody">
+    <p> When declaring variables in tests we need to be consistent about where we are accessing them from and their scopes. <em><b>All variables which you will use
+        across multiple tests must be defined in the test fixture and must be protected. </b></em></p>
+    <p> <em><b>Any variable which is specific to the certain test you are running must only be defined locally.</b></em> Some examples are a temporary variable storing a
+        value before it was changed. </p>
+    <p> The only exception to this is when you are defining your error message variables. In this case, you should define them in the test fixture even if they are only used
+        for one test. This is purely for convenience to whoever is looking at the code.
+    </p>
+  </div>
+  
+  <!-- Error Messages -->
+  <h3 id="Error Messages" style="left: -46px; position: relative"> Error Messages<a href="https://hyp-ed.github.io/styleguide/#Error%20Messages" alt="link to Error Messages"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+  <div class="stylebody">
+    <p> When writing error messages for your ASSERT() or EXPECT() you should do the following:</p>
+    <ul>
+        <li>Encapsulate the error messages in variables defined in the test fixture</li>
+        <li>Do not write the error message directly as a string onto the end of the ASSERT or EXPECT</li>
+    </ul>
+
+    <pre class="badcode">// Bad - message added directly, not stored in test fixture variable
+struct DifferentiatorFunctionality : ::testing::Test {
+...
+}
+
+TEST_F(DifferentiatorFunctionality, handlesZeroInput){
+ASSERT(...) &lt;&lt; "Should handle zero input"
+}
+    </pre>
+    <pre>struct DifferentiatorFunctionality : ::testing::Test {
+std::string zero_input_error = "Should handle zero input";
+}
+
+TEST_F(DifferentiatorFunctionality, handlesZeroInput){
+ASSERT(...) &lt;&lt; zero_input_error;
+}
+    </pre>
+
+    <p> These error message variables may seem pretty meaningless but they become much better when you get
+        longer error messages and helps keep the 100-character limit on lines as mentioned earlier in the
+        style guide </p>
+  </div>
+
+  <!-- Production Tests -->
+  <h3 id="Production Tests" style="left: -46px; position: relative"> Production Tests</h3>
+  <div class="stylebody">
+    <p> Production tests may be resource intensive and may take some time to run; these are categorised separately from other tests. Production tests do not run when the user enters ‘make test’ (being non-important and/or expensive in execution time). 
+<br>They should be denoted by adding ‘_prod’ at the end of the test name. For example: 
+</p>
+    
+
+    
+    <pre>TEST_F(DifferentiatorFunctionality, handlesZeroInput_prod){
+...
+}
+    </pre>
+
+    
+  </div>
+
+
+
+<!-------------------------------------------------------------------------------------------------------------------
+  Other
+-------------------------------------------------------------------------------------------------------------------->
+      <h2 id="Other" style="left: -46px; position: relative;">Other<a href="https://hyp-ed.github.io/styleguide/#Other" alt="link to Other"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+
+      <p>Things here are often on the borderline between <em>code style</em> and <em>coding practice</em>.</p>
+      
+      <h3 id="Local_Variables" style="left: -46px; position: relative;">Local Variables
+      <a href="https://hyp-ed.github.io/styleguide/#Local_Variables" alt="link to Local_Variables"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Place a function's variables in the narrowest scope possible, and initialize variables in the
+          declaration.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>C++ allows you to declare variables anywhere in a function. We encourage you to declare them
+          in as local a scope as possible, and as close to the first use as possible. This makes it easier
+          for the reader to find the declaration and see what type the variable is and what it was initialized
+          to. In particular, initialization should be used instead of declaration and assignment, e.g.:</p>
+
+        <pre class="badcode">int i;
+i = f();      // Bad -- initialization separate from declaration.
+</pre>
+
+        <pre>int j = g();  // Good -- declaration has initialization.
+</pre>
+
+
+        <p>Variables needed for
+          <code>if</code>,
+          <code>while</code> and
+          <code>for</code> statements should normally be declared within those statements, so that such variables are
+          confined to those scopes. E.g.:</p>
+
+        <pre>while (const char* p = strchr(str, '/')) str = p + 1;
+</pre>
+
+        <p>There is one caveat: if the variable is an object, its constructor is invoked every time it enters
+          scope and is created, and its destructor is invoked every time it goes out of scope.</p>
+
+        <pre class="badcode">// Inefficient implementation:
+for (int i = 0; i &lt; 1000000; ++i) {
+  Foo f;  // My ctor and dtor get called 1000000 times each.
+  f.doSomething(i);
+}
+</pre>
+
+        <p>It may be more efficient to declare such a variable used in a loop outside that loop:</p>
+
+        <pre>Foo f;  // My ctor and dtor get called once each.
+for (int i = 0; i &lt; 1000000; ++i) {
+  f.doSomething(i);
+}
+</pre>
+
+      </div>
+
+      <p>Classes are the fundamental unit of code in C++. Naturally, we use them extensively. This section
+        lists the main dos and don'ts you should follow when writing a class.</p>
+
+      <h3 id="Inheritance" style="left: -46px; position: relative;">Inheritance<a href="https://hyp-ed.github.io/styleguide/#Inheritance" alt="link to Inheritance"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="stylebody">
+
+        <p>Explicitly annotate overrides of virtual functions or virtual destructors
+          with an <code>override</code> or (less frequently) <code>final</code>
+          specifier. Older (pre-C++11) code will use the <code>virtual</code>
+          keyword as an inferior alternative annotation. For clarity, use exactly
+          one of <code>override</code>, <code>final</code>, or <code>virtual</code>
+          when declaring an override. Rationale: A function or destructor marked
+          <code>override</code> or <code>final</code> that is not an override
+          of a base class virtual function will not compile, and this helps catch
+          common errors. The specifiers serve as documentation; if no specifier
+          is present, the reader has to check all ancestors of the class in question
+          to determine if the function or destructor is virtual or not.</p>
+
+      </div>
+
+      <h3 id="Declaration_Order" style="left: -46px; position: relative;">Declaration Order in Classes<a href="https://hyp-ed.github.io/styleguide/#Declaration_Order" alt="link to Declaration_Order"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Group similar declarations together, placing public parts earlier.
+        </p>
+      </div>
+
+      <div class="stylebody">
+
+        <p>A class definition should usually start with a
+          <code>public:</code> section, followed by
+          <code>protected:</code>, then
+          <code>private:</code>. Omit sections that would be empty.</p>
+
+        <p>Within each section, generally prefer grouping similar kinds of declarations together, and generally
+          prefer the following order: types (including
+          <code>typedef</code>,
+          <code>using</code>, and nested structs and classes), constants, factory functions, constructors, assignment operators,
+          destructor, all other methods, data members.</p>
+
+        <p>Do not put large method definitions inline in the class definition. Usually, only trivial or
+          performance-critical, and very short, methods may be defined inline. <!--TODO See
+          <a href="#Inline_Functions">Inline Functions
+          </a> for more details.--></p>
+
+      </div>
+
+      <h3 id="Function_Parameter_Ordering" style="left: -46px; position: relative;">Function Parameter Ordering<a href="https://hyp-ed.github.io/styleguide/#Function_Parameter_Ordering" alt="link to Function_Parameter_Ordering"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>When defining a function, parameter order is: inputs, then outputs.
+        </p>
+      </div>
+
+      <div class="stylebody">
+        <p>Parameters to C/C++ functions are either input to the function, output from the function, or
+          both. Input parameters are usually values or
+          <code>const</code> references, while output and input/output parameters will be pointers to non-
+          <code>const</code>. When ordering function parameters, put all input-only parameters before any output parameters.
+          In particular, do not add new parameters to the end of the function just because they are new;
+          place new input-only parameters before the output parameters.</p>
+
+        <p>This is not a hard-and-fast rule. Parameters that are both input and output (often classes/structs)
+          muddy the waters, and, as always, consistency with related functions may require you to bend
+          the rule.</p>
+
+      </div>
+
+      <h3 id="Write_Short_Functions" style="left: -46px; position: relative;">Write Short Functions<a href="https://hyp-ed.github.io/styleguide/#Write_Short_Functions" alt="link to Write_Short_Functions"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Prefer small and focused functions.</p>
+      </div>
+
+      <div class="stylebody">
+        <p>Long functions are sometimes appropriate, so no hard limit is placed on functions
+          length. If a function exceeds about 40 lines, think about whether it can be broken up without
+          harming the structure of the program.</p>
+
+        <p>Even if your long function works perfectly now, someone modifying it in a few months may add
+          new behavior. This could result in bugs that are hard to find. Keeping your functions short
+          and simple makes it easier for other people to read and modify your code.</p>
+
+        <p>You could find long and complicated functions when working with some code. Do not be intimidated
+          by modifying existing code: if working with such a function proves to be difficult, you find
+          that errors are hard to debug, or you want to use a piece of it in several different contexts,
+          consider breaking up the function into smaller and more manageable pieces.</p>
+
+      </div>
+
+
+      <h3 id="Casting" style="left: -46px; position: relative;">Casting<a href="https://hyp-ed.github.io/styleguide/#Casting" alt="link to Casting"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use C++-style casts like
+          <code>static_cast&lt;float&gt;(double_value)</code>, or brace initialization for conversion of arithmetic types like
+          <code>int64 y = int64{1} &lt;&lt; 42</code>. Do not use cast formats like
+          <code>int y = (int)x</code> or
+          <code>int y = int(x)</code> (but the latter is okay when invoking a constructor of a class type).</p>
+      </div>
+
+      <div class="stylebody">
+
+        <div class="definition">
+          <p> C++ introduced a different cast system from C that distinguishes the types of cast operations.</p>
+        </div>
+
+        <div class="pros">
+          <p>The problem with C casts is the ambiguity of the operation; sometimes you are doing a
+            <em>conversion</em>
+            (e.g.,
+            <code>(int)3.5</code>) and sometimes you are doing a
+            <em>cast</em> (e.g.,
+            <code>(int)"hello"</code>). Brace initialization and C++ casts can often help avoid this ambiguity. Additionally,
+            C++ casts are more visible when searching for them.
+          </p>
+        </div>
+
+        <div class="cons">
+          <p>The C++-style cast syntax is verbose and cumbersome.</p>
+        </div>
+
+        <div class="decision">
+          <p>Do not use C-style casts. Instead, use these C++-style casts when explicit type conversion
+            is necessary. </p>
+
+          <ul>
+            <li>Use brace initialization to convert arithmetic types (e.g.
+              <code>int64{x}</code>). This is the safest approach because code will not compile if conversion can result in
+              information loss. The syntax is also concise.</li>
+
+
+
+            <li>Use
+              <code>static_cast</code> as the equivalent of a C-style cast that does value conversion, when you need to explicitly
+              up-cast a pointer from a class to its superclass, or when you need to explicitly cast a
+              pointer from a superclass to a subclass. In this last case, you must be sure your object
+              is actually an instance of the subclass.</li>
+
+            <!--TODO <li>Use
+              <code>const_cast</code> to remove the
+              <code>const</code> qualifier (see
+              <a href="#Use_of_const">const</a>).</li>-->
+
+            <li>Use
+              <code>reinterpret_cast</code> to do unsafe conversions of pointer types to and from integer and other pointer types.
+              Use this only if you know what you are doing and you understand the aliasing issues.
+            </li>
+
+
+          </ul>
+
+          <!--TODO <p>See the
+            <a href="#Run-Time_Type_Information__RTTI_">
+              RTTI section</a> for guidance on the use of
+            <code>dynamic_cast</code>.</p> -->
+        </div>
+
+      </div>
+
+      <h3 id="Preincrement_and_Predecrement" style="left: -46px; position: relative;">Preincrement and Predecrement<a href="https://hyp-ed.github.io/styleguide/#Preincrement_and_Predecrement" alt="link to Preincrement_and_Predecrement"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <div class="summary">
+        <p>Use prefix form (
+          <code>++i</code>) of the increment and decrement operators with iterators and other template objects.
+        </p>
+      </div>
+
+      <div class="stylebody">
+
+        <div class="definition">
+          <p> When a variable is incremented (
+            <code>++i</code> or
+            <code>i++</code>) or decremented (
+            <code>--i</code> or
+            <code>i--</code>) and the value of the expression is not used, one must decide whether to preincrement (decrement)
+            or postincrement (decrement).
+          </p>
+        </div>
+
+        <div class="pros">
+          <p>When the return value is ignored, the "pre" form (
+            <code>++i</code>) is never less efficient than the "post" form (
+            <code>i++</code>), and is often more efficient. This is because post-increment (or decrement) requires a
+            copy of
+            <code>i</code> to be made, which is the value of the expression. If
+            <code>i</code> is an iterator or other non-scalar type, copying
+            <code>i</code> could be expensive. Since the two types of increment behave the same when the value is ignored,
+            why not just always pre-increment?</p>
+        </div>
+
+        <div class="cons">
+          <p>The tradition developed, in C, of using post-increment when the expression value is not used,
+            especially in
+            <code>for</code> loops. Some find post-increment easier to read, since the "subject" (
+            <code>i</code>) precedes the "verb" (
+            <code>++</code>), just like in English.</p>
+        </div>
+
+        <div class="decision">
+          <p> For simple scalar (non-object) values there is no reason to prefer one form and we allow either.
+            For iterators and other template types, use pre-increment.</p>
+        </div>
+
+      </div>
+
+      <h3 id="Integer_Types" style="left: -46px; position: relative;">Integer Types<a href="https://hyp-ed.github.io/styleguide/#Integer_Types" alt="link to Integer_Types"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h3>
+
+      <!--TODO max hardware size (32/64b)-->
+
+      <div class="summary">
+        <p>Of the built-in C++ integer types, the only one used is
+          <code>int</code>. If a program needs a variable of a different size, use a precise-width integer type from
+          <code>&lt;stdint.h&gt;</code>, such as
+          <code>int16_t</code>. If your variable represents a value that could ever be greater than or equal to 2^31 (2GiB),
+          use a 64-bit type such as
+          <code>int64_t</code>. Keep in mind that even if your value won't ever be too large for an
+          <code>int</code>, it may be used in intermediate calculations which may require a larger type. When in doubt,
+          choose a larger type.</p>
+      </div>
+
+      <div class="stylebody">
+
+        <div class="definition">
+          <p> C++ does not specify the sizes of its integer types. Typically people assume that
+            <code>short</code> is 16 bits,
+            <code>int</code> is 32 bits,
+            <code>long</code> is 32 bits and
+            <code>long long</code> is 64 bits.</p>
+        </div>
+
+        <div class="pros">
+          <p>Uniformity of declaration.</p>
+        </div>
+
+        <div class="cons">
+          <p>The sizes of integral types in C++ can vary based on compiler and architecture.</p>
+        </div>
+
+        <div class="decision">
+
+          <p>
+            <code>&lt;stdint.h&gt;</code> defines types like
+            <code>int16_t</code>,
+            <code>uint32_t</code>,
+            <code>int64_t</code>, etc. You should always use those in preference to
+            <code>short</code>,
+            <code>unsigned
+long long</code> and the like, when you need a guarantee on the size of an integer. Of the C integer types,
+            only
+            <code>int</code> should be used. When appropriate, you are welcome to use standard types like
+            <code>size_t</code> and
+            <code>ptrdiff_t</code>.</p>
+
+          <p>We use
+            <code>int</code> very often, for integers we know are not going to be too big, e.g., loop counters. Use plain
+            old
+            <code>int</code> for such things. You should assume that an
+            <code>int</code> is at least 32 bits, but don't assume that it has more than 32 bits. If you need a 64-bit
+            integer type, use
+            <code>int64_t</code> or
+            <code>uint64_t</code>.</p>
+
+        </div>
+
+      </div>
+
+<!-------------------------------------------------------------------------------------------------------------------
+  Exceptions to the Rules
+-------------------------------------------------------------------------------------------------------------------->
+      <h2 id="Exceptions_to_the_Rules" style="left: -46px; position: relative;">Exceptions to the Rules<a href="https://hyp-ed.github.io/styleguide/#Exceptions_to_the_Rules" alt="link to Exceptions_to_the_Rules"><img src="./HypED C++ Style Guide_files/link.png" width="21" height="21" style="float:left;position:relative;bottom:5px;"></a></h2>
+
+      <p>None yet.</p>
+
+
+      <h2 class="ignoreLink">Parting Words</h2>
+
+      <p>Use common sense and
+        <em>BE CONSISTENT</em>.</p>
+
+      <p>If you are editing code, take a few minutes to look at the code around you and determine its
+        style.</p>
+
+      <p>The point of having style guidelines is to have a common vocabulary of coding so people can concentrate
+        on what you are saying, rather than on how you are saying it. We present global style rules here
+        so people know the vocabulary. But local style is also important. If code you add to a file looks
+        drastically different from the existing code around it, the discontinuity throws readers out
+        of their rhythm when they go to read it. Try to avoid this.</p>
+
+      <p>OK, enough writing about writing code; the code itself is much more interesting. Have fun!</p>
+
+      <hr>
+
+    </div>
+  </div>
+
+
+
+
+
+</body><div id="__vcbe" data-live="true"></div></html>
