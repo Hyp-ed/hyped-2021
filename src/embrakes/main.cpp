@@ -85,6 +85,7 @@ void Main::run()
         brake_1->checkHome();
         break;
       case data::State::kAccelerating:
+      case data::State::kCruising:
         brake_1->checkAccFailure();
         break;
       case data::State::kNominalBraking:
