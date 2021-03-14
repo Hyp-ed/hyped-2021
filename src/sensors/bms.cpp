@@ -188,9 +188,11 @@ std::vector<uint16_t> BMSHP::existing_ids_;   // NOLINT [build/include_what_you_
 
 BMSHP::BMSHP(uint16_t id, Logger& log)
     : log_(log),
-      can_id_(id*2 + bms::kHPBase),
-      thermistor_id_(id + bms::kThermistorBase),
-      cell_id_(id + bms::kCellBase),
+//      can_id_(id*2 + bms::kHPBase),
+      hcu_maxt_id_(id + bms::kHPHcuMaxtBase),
+      hcu_info_id_(id + bms::kHPHcuInfoBase),
+      hcu_max_id_(id + bms::kHPHcuMaxvBase)
+      cell_id_(bms::kHPCellBase),
       local_data_ {},
       last_update_time_(0)
 {
@@ -221,79 +223,74 @@ void BMSHP::getData(BatteryData* battery)
 
 bool BMSHP::hasId(uint32_t id, bool extended)
 {
-  // HPBMS
-  if (id == can_id_ || id == static_cast<uint16_t>(can_id_ + 1)) return true;
-
-  // CAN ID for broadcast message
-  if (id == cell_id_) return true;
-
-  // OBDII ECU ID
-  if (id == 0x7E4) return true;
-  // unused messages, fault message?
-  if (id == 0x6D0 || id == 0x7EC) return true;
-  if (id == 0x70 || id == 0x80) return true;
-
-  // Thermistor expansion module
-  if (id == thermistor_id_) return true;
-
-  // Thermistor node IDs
-  if (id == 0x6B4 || id == 0x6B5) return true;
-  // ignore misc thermistor module messages
-  if (id == 0x1838F380 || id == 0x18EEFF80) return true;
-  if (id == 0x1838F381 || id == 0x18EEFF81) return true;
-
+  //if is BMS_HCU_MAXT message
+  if (message.id == hcu_maxt_id_) return true;
+  //if is BMS_HCU_INFO message
+  if (message.id == hcu_info_id_) return true;
+  //if is BMS_HCU_MAX message
+  if (message.id == hcu_max_id_) return true;
+  //if is BMS_HCU_CELLV message
+  if (((message.id << 16) >> 16) == cell_id_) { //check if ending with 50F3
+    int index = static_cast<int>((message.id << 8)>>24) //index between 00 and 4F
+    if (index >= 0 && index <=79) {
+      return true;
+  }
   return false;
 }
 
 void BMSHP::processNewData(utils::io::can::Frame& message)
 {
-  // thermistor expansion module
-  if (message.id == thermistor_id_) {   // C
-    local_data_.low_temperature     = message.data[1];
-    local_data_.high_temperature    = message.data[2];
-    local_data_.average_temperature = message.data[3];
+  // HP temp message (BMS_HCU_MAXT)
+  // [MaxTemp, MaxTemp, MaxTempNo, MinTempNo, CoolingCtl, HeatingCtl]
+  if (message.id == hcu_maxt_id_) {   // C
+    local_data_.low_temperature     = message.data[0];
+    local_data_.high_temperature    = message.data[1];
   }
-
-  log_.DBG2("BMSHP", "High Temp: %d, Average Temp: %d, Low Temp: %d",
+  log_.DBG2("BMSHP", "High Temp: %d, Low Temp: %d",
     local_data_.high_temperature,
-    local_data_.average_temperature,
     local_data_.low_temperature);
 
-  // voltage, current, charge, and isolation 1:1 configured
-  // low_voltage_cell and high_voltage_cell 10:1 configured
-  // message format is expected to look like this:
-  // [ voltageH , volageL , currentH , currentL , charge , lowVoltageCellH , lowVoltageCellL ]
-  // [ highVoltageCellH , highVoltageCellL , IsolationADCH , Isolation ADCL]
-  if (message.id == can_id_) {
-    local_data_.voltage     = (message.data[0] << 8) | message.data[1];           // dV
-    local_data_.current     = (message.data[2] << 8) | message.data[3];           // dV
-    local_data_.charge      = (message.data[4]) * 0.5;                            // %
-    local_data_.low_voltage_cell  = ((message.data[5] << 8) | message.data[6]);   // mV
-  } else if (message.id == static_cast<uint16_t>(can_id_ + 1)) {
+  // HP BMS_HCU_INFO
+  // [BatVoltage(MSB), BatVoltage(LSB), BatVoltage(LSB), BatVoltage(LSB), BatSoc, ....]
+  if (message.id == hcu_info_id_){
+    local_data_.voltage     = (message.data[0] << 8) | message.data[1];           // V
+    local_data_local_data_.current     = (message.data[2] << 8) | message.data[3];// V
+    local_data_.charge      = (message.data[4]);                                  // %
+  }
+
+  // HP BMS_HCU_MAX
+  // [MaxCellVolt(MSB), MaxCellVolt(LSB), MinCellVolt(MSB), MinCellVolt(LSB), ....]
+  if (message.id == hcu_max_id_){
     local_data_.high_voltage_cell = ((message.data[0] << 8) | message.data[1]);   // mV
-    uint16_t imd_reading = ((message.data[2] << 8) | message.data[3]);            // mV
-    log_.DBG2("BMSHP", "Isolation ADC: %u", imd_reading);
-    if (imd_reading > 4000) {      // 4 volts for safe isolation
-      local_data_.imd_fault = true;
-    } else {
-      local_data_.imd_fault = false;
-    }
+    local_data_.low_voltage_cell  = ((message.data[2] << 8) | message.data[3]);   // mV
   }
   last_update_time_ = utils::Timer::getTimeMicros();
+  log_.DBG2("BMSHP", "received data Volt,Curr,Char,low_v,high_v: %u,%u,%u,%u,%u",
+            local_data_.voltage,
+            local_data_.current,
+            local_data_.charge,
+            local_data_.low_voltage_cell,
+            local_data_.high_voltage_cell);
 
-  // individual cell voltages, configured at 100ms refresh rate
-  if (message.id == cell_id_) {
-    int cell_num = static_cast<int>(message.data[0]);   // get any value
-    local_data_.cell_voltage[cell_num] = (message.data[1] << 8) | message.data[2];
-    local_data_.cell_voltage[cell_num] /=10;            // mV
+
+  // BMS_HCU_CELLT check each cell voltage
+  // [CellVoltN+1, CellVoltN+2, CellVoltN+3, CellVoltN+4]
+  // message.id between 0x180050F3 and 0x184F50F3
+  if (((message.id << 16) >> 16) == cell_id_) { //check if ending with 50F3
+    int index = static_cast<int>((message.id << 8)>>24) //index between 00 and 4F
+      if (index >= 0 && index <=79) {
+        local_data_.cell_voltage[index*4 + 0] = (message.data[0] << 8) | message.data[1]   //mv
+        local_data_.cell_voltage[index*4 + 1] = (message.data[2] << 8) | message.data[3]   //mv
+        local_data_.cell_voltage[index*4 + 2] = (message.data[4] << 8) | message.data[5]   //mv
+        local_data_.cell_voltage[index*4 + 3] = (message.data[6] << 8) | message.data[7]   //mv
+    }
+    log_.DBG2("BMSHP", "Index: %u Cells voltage: %u,%u,%u,%u",
+      index,
+      local_data_.cell_voltage[index*4 + 0],
+      local_data_.cell_voltage[index*4 + 1],
+      local_data_.cell_voltage[index*4 + 2],
+      local_data_.cell_voltage[index*4 + 3]);
   }
 
-  log_.DBG2("BMSHP", "Cell voltage: %u", local_data_.cell_voltage[0]);
-  log_.DBG2("BMSHP", "received data Volt,Curr,Char,low_v,high_v: %u,%u,%u,%u,%u",
-    local_data_.voltage,
-    local_data_.current,
-    local_data_.charge,
-    local_data_.low_voltage_cell,
-    local_data_.high_voltage_cell);
 }
 }}  // namespace hyped::sensors

@@ -64,7 +64,9 @@ constexpr uint16_t kIdSize      = 5;       // size of id-space of BMS-CAN messag
  * base = kIdBase + (kIdIncrement * id_)
  */
 
-/**
+
+//TODO TBD
+/** OLD
  * LP: Notches:    0        1        2
  *     ID:      301-304, 311-314, 321-324
  *     Hex:     12D-130, 137-13A, 141-144
@@ -74,9 +76,20 @@ constexpr uint16_t kIdSize      = 5;       // size of id-space of BMS-CAN messag
  *       Hex:  0x1839F380 0x1839F381
  */
 
-constexpr uint16_t kHPBase      = 0x6B0;    // CAN id for high power BMSHP
-constexpr uint64_t kThermistorBase = 0x1839F380;  // HP Thermistor expansion module
-constexpr uint16_t kCellBase = 0x36;        // BMS Broadcast ID
+/** NEW
+ * LP: Notches:    0        1        2
+ *     ID:
+ *     Hex:
+ * HP: ID:      384-392, ???
+ *     Hex:     180-188, ???
+ */
+
+constexpr uint16_t kHPBase      = 0x180;    // CAN id for high power BMSHP
+constexpr uint64_t kHPHcuMaxtBase = 0x186240F3;  // HP Temp (BMS_HCU_MAXT)message ID
+constexpr uint64_t kHPHcuInfoBase = 0x186040F3 // HP BMS_HCU_INFO message ID
+constexpr uint64_t kHPHcuMaxvBase = 0x186140F3 // HP BMS_HCU_MAXV message ID
+constexpr uint16_t kHPCellBase = 0x50F3;        // HP BMS Cell voltage message ending
+// 0x180050F3 - 0x184F50F3 [Cell voltage]
 
 struct Data {
   static constexpr uint8_t kTemperatureOffset = 40;
@@ -166,11 +179,13 @@ class BMSHP : public CanProccesor, public BMSInterface {
 
  private:
   Logger&         log_;
-  uint16_t        can_id_;            // CAN id to be used
-  uint64_t        thermistor_id_;     // thermistor expansion module CAN id
-  uint16_t        cell_id_;           // broadcast message ID
-  BatteryData     local_data_;        // stores values from CAN
-  uint64_t        last_update_time_;  // stores arrival time of CAN message
+//  uint16_t        can_id_;             // CAN id to be used
+  uint64_t        hcu_info_id_;        // HP BMS_HCU_INFO
+  uint64_t        hcu_max_id_;         // HP BMS_HCU_MAXV
+  uint64_t        hcu_maxt_id_;        // thermistor expansion module CAN id
+  uint16_t        cell_id_;            // broadcast message ID
+  BatteryData     local_data_;         // stores values from CAN
+  uint64_t        last_update_time_;   // stores arrival time of CAN message
   // for making sure only one object per BMS unit exist
   static std::vector<uint16_t> existing_ids_;
   NO_COPY_ASSIGN(BMSHP);
