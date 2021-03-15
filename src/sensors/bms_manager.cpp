@@ -116,7 +116,7 @@ void BmsManager::run()
     if (utils::Timer::getTimeMicros() - start_time_ > check_time_) {
       //if previous state is kCalibrating, turn it to ready
       if (batteries_.module_status == data::ModuleStatus::kCalibrating){
-        batteries_.module_status = data::ModuleStatus::kReady
+        batteries_.module_status = data::ModuleStatus::kReady;
       }
       //TODO NEXT state?
 
@@ -132,7 +132,7 @@ void BmsManager::run()
         previous_status_ = batteries_.module_status;
       }
     } else{
-      batteries_.module_status = data::ModuleStatus::kCalibrating
+      batteries_.module_status = data::ModuleStatus::kCalibrating;
     }
 
     // publish the new data
