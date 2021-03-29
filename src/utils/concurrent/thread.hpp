@@ -72,7 +72,7 @@ class BusyThread : public Thread {
  public:
   ~BusyThread();
   void run() override;
-  bool running_ = true;
+  volatile bool running_ = true;
 };
 
 }}}   // namespace hyped::utils::concurrent
