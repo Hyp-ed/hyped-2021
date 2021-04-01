@@ -1,0 +1,353 @@
+{ "crucial_data": [
+  {
+    "name": "distance",
+    "min": 0.0,
+    "max": 1250.0,
+    "unit": "m",
+    "value": 0
+  },
+  {
+    "name": "velocity",
+    "min": 0.0,
+    "max": 250.0,
+    "unit": "m/s",
+    "value": 0
+  },
+  {
+    "name": "acceleration",
+    "min": -50.0,
+    "max": 50.0,
+    "unit": "m/s^2",
+    "value": 0
+  },
+  {
+    "name": "status",
+    "value": "IDLE"
+  }
+],
+  "additional_data": [
+    {
+      "name": "Batteries",
+      "value": [
+        {
+          "name": "Low Power Batteries",
+          "value": [
+            {
+              "name": "LP 1",
+              "value": [
+                {
+                  "name": "Voltage",
+                  "min": 17.5,
+                  "max": 29.4,
+                  "value": 24.5,
+                  "unit": "V"
+                },
+                {
+                  "name": "Current",
+                  "min": 0,
+                  "max": 50,
+                  "value": 45,
+                  "unit": "A"
+                },
+                {
+                  "name": "Charge",
+                  "min": 20,
+                  "max": 100,
+                  "value": 70,
+                  "unit": "%"
+                },
+                {
+                  "name": "Temperature",
+                  "min": 10,
+                  "max": 60,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "Individual Voltages",
+                  "value": [
+                    {
+                      "name": "Cell 1",
+                      "min": 17.5,
+                      "max": 29.4,
+                      "value": 20,
+                      "unit": "V"
+                    },
+                    {
+                      "name": "Cell 2",
+                      "min": 17.5,
+                      "max": 29.4,
+                      "value": 24,
+                      "unit": "V"
+                    },
+                    {
+                      "name": "Cell 3",
+                      "min": 17.5,
+                      "max": 29.4,
+                      "value": 28,
+                      "unit": "V"
+                    },
+                    {
+                      "name": "Cell 4",
+                      "min": 17.5,
+                      "max": 29.4,
+                      "value": 30,
+                      "unit": "V"
+                    },
+                    {
+                      "name": "Cell 5",
+                      "min": 17.5,
+                      "max": 29.4,
+                      "value": 31,
+                      "unit": "V"
+                    }
+                  ]
+                },
+                {
+                  "name": "Individual Temperatures",
+                  "value": [
+                    {
+                      "name": "Cell 1",
+                      "min": 10,
+                      "max": 60,
+                      "value": 5,
+                      "unit": "C"
+                    },
+                    {
+                      "name": "Cell 2",
+                      "min": 10,
+                      "max": 60,
+                      "value": 40,
+                      "unit": "C"
+                    },
+                    {
+                      "name": "Cell 3",
+                      "min": 10,
+                      "max": 60,
+                      "value": 50,
+                      "unit": "C"
+                    },
+                    {
+                      "name": "Cell 4",
+                      "min": 10,
+                      "max": 60,
+                      "value": 59,
+                      "unit": "C"
+                    },
+                    {
+                      "name": "Cell 5",
+                      "min": 10,
+                      "max": 60,
+                      "value": 61,
+                      "unit": "C"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LP 2",
+              "value": [
+                {
+                  "name": "Voltage",
+                  "min": 17.5,
+                  "max": 29.4,
+                  "value": 24.5,
+                  "unit": "V"
+                },
+                {
+                  "name": "Current",
+                  "min": 0,
+                  "max": 50,
+                  "value": 45,
+                  "unit": "A"
+                },
+                {
+                  "name": "Charge",
+                  "min": 20,
+                  "max": 100,
+                  "value": 70,
+                  "unit": "%"
+                },
+                {
+                  "name": "Temperature",
+                  "min": 10,
+                  "max": 60,
+                  "value": 35,
+                  "unit": "C"
+                }
+              ]
+            },
+            {
+              "name": "LP 3",
+              "value": [
+                {
+                  "name": "Voltage",
+                  "min": 17.5,
+                  "max": 29.4,
+                  "value": 24.5,
+                  "unit": "V"
+                },
+                {
+                  "name": "Current",
+                  "min": 0,
+                  "max": 50,
+                  "value": 45,
+                  "unit": "A"
+                },
+                {
+                  "name": "Charge",
+                  "min": 20,
+                  "max": 100,
+                  "value": 70,
+                  "unit": "%"
+                },
+                {
+                  "name": "Temperature",
+                  "min": 10,
+                  "max": 60,
+                  "value": 35,
+                  "unit": "C"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "High Power Batteries",
+          "value": [
+            {
+              "name": "HP 1",
+              "value": [
+                {
+                  "name": "Voltage",
+                  "min": 100,
+                  "max": 129.6,
+                  "value": 115,
+                  "unit": "V"
+                },
+                {
+                  "name": "Current",
+                  "min": 0,
+                  "max": 350,
+                  "value": 100,
+                  "unit": "A"
+                },
+                {
+                  "name": "Charge",
+                  "min": 20,
+                  "max": 100,
+                  "value": 70,
+                  "unit": "%"
+                },
+                {
+                  "name": "Avg Temperature",
+                  "min": 10,
+                  "max": 65,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "Low Temperature",
+                  "min": 10,
+                  "max": 65,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "High Temperature",
+                  "min": 10,
+                  "max": 65,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "Low Voltage Cell",
+                  "min": 2.7,
+                  "max": 3.6,
+                  "value": 3,
+                  "unit": "V"
+                },
+                {
+                  "name": "High Voltage Cell",
+                  "min": 2.7,
+                  "max": 3.6,
+                  "value": 3.2,
+                  "unit": "V"
+                }
+              ]
+            },
+            {
+              "name": "HP 2",
+              "value": [
+                {
+                  "name": "Voltage",
+                  "min": 100,
+                  "max": 129.6,
+                  "value": 115,
+                  "unit": "V"
+                },
+                {
+                  "name": "Current",
+                  "min": 0,
+                  "max": 350,
+                  "value": 100,
+                  "unit": "A"
+                },
+                {
+                  "name": "Charge",
+                  "min": 20,
+                  "max": 100,
+                  "value": 70,
+                  "unit": "%"
+                },
+                {
+                  "name": "Avg Temperature",
+                  "min": 10,
+                  "max": 65,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "Low Temperature",
+                  "min": 10,
+                  "max": 65,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "High Temperature",
+                  "min": 10,
+                  "max": 65,
+                  "value": 35,
+                  "unit": "C"
+                },
+                {
+                  "name": "Low Voltage Cell",
+                  "min": 2.7,
+                  "max": 3.6,
+                  "value": 3,
+                  "unit": "V"
+                },
+                {
+                  "name": "High Voltage Cell",
+                  "min": 2.7,
+                  "max": 3.6,
+                  "value": 3.2,
+                  "unit": "V"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Overall Temperature",
+      "min": 20,
+      "max": 100,
+      "value": 110,
+      "unit": "C"
+    }
+  ]
+}

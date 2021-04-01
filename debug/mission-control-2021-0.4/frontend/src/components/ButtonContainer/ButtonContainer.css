@@ -1,0 +1,11 @@
+.button-container {
+  grid-row: 8/10;
+  grid-column: 29/33;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.button-container .button + .button {
+  margin-top: 9px;
+}

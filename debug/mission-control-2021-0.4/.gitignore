@@ -1,0 +1,17 @@
+build
+bin
+.gradle
+.classpath
+.project
+.settings
+.vscode
+.python-version
+
+frontend/node_modules
+frontend/build
+frontend/build_packageYarnApp
+frontend/.gradle
+frontend/.eslintcache
+hyped-pod_code
+
+**/.DS_Store

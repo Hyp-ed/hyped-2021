@@ -1,0 +1,37 @@
+#gauge-distance {
+    grid-row: 2/4;
+    grid-column: 29/33;
+}
+
+#gauge-velocity {
+    grid-row: 4/6;
+    grid-column: 29/33;
+}
+
+#gauge-acceleration {
+    grid-row: 6/8;
+    grid-column: 29/33;
+}
+
+.gauge-title {
+    color: white;
+    padding: 10px 15px;
+    font-size: 1vw;
+    margin-bottom: -35px;
+}
+
+.progress-ring {
+    position: relative;
+    transform-origin: 0 0;
+}
+
+.progress-ring-progress {
+    transition: 0.35s stroke-dashoffset;
+    transform: rotate(-200deg);
+    transform-origin: 50% 50%;
+}
+
+.progress-ring-stopper {
+    transform: rotate(-20deg);
+    transform-origin: 50% 50%;
+}

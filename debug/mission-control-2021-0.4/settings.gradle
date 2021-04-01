@@ -1,0 +1,3 @@
+rootProject.name = 'mission-control-2021'
+
+include 'frontend'

@@ -1,0 +1,91 @@
+.button {
+  flex: 1;
+  border-radius: 15px;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.8);
+  font-size: 1.2vw;
+  display: inline-flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.button:hover:not(.disabled) {
+  cursor: pointer;
+}
+
+.button.disabled:hover {
+  cursor: no-drop;
+}
+
+.button-icon {
+  height: 100%;
+  margin-right: 10px;
+}
+
+/* Colors */
+
+/* Green */
+.button-green-pulse {
+  animation-name: green-color-pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes green-color-pulse {
+  0% {
+    background-color: #191919;
+  }
+  50% {
+    background-color: rgba(23, 154, 35);
+  }
+  100% {
+    background-color: #191919;
+  }
+}
+
+.button-green {
+  background: rgba(23, 154, 35);
+}
+
+.button-green-pulse:hover, .button-green-pulse.disabled, .button-green:hover, .button-green.disabled {
+  animation: 0;
+  background: rgba(17, 114, 26);
+}
+
+/* Blue */
+.button-blue-pulse {
+  animation-name: blue-color-pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blue-color-pulse {
+  0% {
+    background-color: #191919;
+  }
+  50% {
+    background-color: rgb(16, 152, 173);
+  }
+  100% {
+    background-color: #191919;
+  }
+}
+
+.button-blue {
+  background: rgb(16, 152, 173);
+}
+
+.button-blue-pulse:hover, .button-blue-pulse.disabled, .button-blue:hover, .button-blue.disabled {
+  animation: 0;
+  background: rgb(12, 114, 130);
+}
+
+/* Red */
+.button-red {
+  background: rgba(175, 17, 27);
+}
+
+.button-red:hover, .button-red.disabled {
+  background: rgba(131, 13, 20);
+}

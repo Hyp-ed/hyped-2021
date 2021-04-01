@@ -1,0 +1,48 @@
+#graph-container {
+  grid-row: 1/5;
+  grid-column: 1/8;
+  margin: auto;
+  height: 23%;
+  width: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+}
+
+#button-container > * {
+  display: flex;
+  color: #fff;
+  margin-top: 1em;
+  padding: 0.3em;
+}
+
+#button-container > *:hover {
+  cursor: pointer;
+}
+
+#graph-close-button {
+  border-radius: 50%;
+  height: 1em;
+  width: 1em;
+}
+
+#select-button {
+  display:block;
+  width: 25vw;
+  height: 21vh;
+  position: absolute;
+  margin-top: -11vh;
+  z-index:50;
+  border-radius: 5px;
+}
+
+#select-button:hover {
+  background-color: grey;
+  opacity: 0.3;
+}
+
+#graph-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}

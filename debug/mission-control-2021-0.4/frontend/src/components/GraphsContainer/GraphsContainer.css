@@ -1,0 +1,28 @@
+#graphs-container {
+    grid-row: 1/10;
+    grid-column: 1/10;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+
+#graphs-container:nth-child(2n) {
+    break-after: always;
+    flex-basis: 100%;
+}
+#graphs{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 1vw;
+    margin-left: -0.25vw;
+}
+#sidebar{
+    width: 10%;
+    height: 5%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    align-self:center;
+}

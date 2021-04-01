@@ -1,0 +1,6 @@
+.data-container {
+  position: relative;
+  grid-row: 1/10;
+  grid-column: 21/29;
+}
+

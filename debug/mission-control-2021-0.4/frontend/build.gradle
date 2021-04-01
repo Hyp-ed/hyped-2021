@@ -1,0 +1,48 @@
+// saved my life: https://dzone.com/articles/integrating-java-and-npm-builds-using-gradle
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'com.moowork.gradle:gradle-node-plugin:1.3.1'
+    }
+}
+apply plugin: 'base'
+apply plugin: 'com.moowork.node' // gradle-node-plugin
+
+task packageYarnApp(type: Zip) {
+    yarn_build.dependsOn yarn_install
+    dependsOn yarn_build
+    baseName 'frontend'
+    extension 'jar'
+    destinationDir file("${projectDir}/build_packageYarnApp")
+    from('build') {
+        // optional path under which output will be visible in Java classpath, e.g. static resources path
+        into 'static' 
+    }
+}
+
+// declare a dedicated scope for publishing the packaged JAR
+configurations {
+    yarnResources
+}
+
+configurations.default.extendsFrom(configurations.yarnResources)
+
+// expose the artifact created by the packaging task
+artifacts {
+    yarnResources(packageYarnApp.archivePath) {
+        builtBy packageYarnApp
+        type 'jar'
+    }
+}
+
+assemble.dependsOn(packageYarnApp)
+
+clean {
+    delete packageYarnApp.archivePath
+}

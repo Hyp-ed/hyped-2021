@@ -1,0 +1,76 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto-Medium.ttf") format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  background-color: #0A0A0A;
+}
+
+body,
+button,
+input {
+  font-family: "Roboto", sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:active:not(.disabled) {
+  transform: scale(0.99);
+}
+
+button:focus {
+  outline: 0;
+}
+
+.centered {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.gui-wrapper {
+  display: grid;
+  grid-auto-columns: calc(calc(100% - calc(16px * 31))/32);
+  grid-auto-rows: calc(calc(100% - calc(18px * 8))/9);
+  height: calc(100vh - 36px);
+  column-gap: 16px;
+  row-gap: 18px;
+  padding: 18px 8px;
+}
+
+.container {
+  background-color: #191919;
+  border-radius: 15px;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.8);
+}
+
+/* Colors */
+
+.bg-white {
+  background-color: white;
+  color: black;
+}
+
+.bg-transparent {
+  background-color: transparent;
+  color: white;
+}

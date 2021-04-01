@@ -1,0 +1,119 @@
+.modal-run {
+  position: fixed;
+  left: 50%;
+  margin-top: 100px;
+  transform: translate(0, -50%);
+  border: none;
+}
+
+.modal-run-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.setup-wrapper {
+  width: 40vw;
+  padding: 0px 20px 20px 20px;
+  text-align: center;
+  color: white;
+  font-size: 1.25em;
+}
+
+.setup-wrapper-buttons {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  height: 30px;
+}
+
+.input-group > label {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.input-group > input {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px 2px;
+}
+
+.input-group {
+  margin-top: 20px;
+}
+
+.input-group-multiple {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input-group-button {
+  display: inline-flex;
+  width: 100%;
+}
+
+.input-group-button > input {
+  flex-grow: 2;
+}
+
+.input-group-button > button {
+  flex-grow: 1;
+}
+
+.input-group-switch {
+  display: flex;
+  box-sizing: border-box;
+  width: 50%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+
+.switch {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 62px;
+  height: 32px;
+  display: inline-block;
+  position: relative;
+  border-radius: 50px;
+  overflow: hidden;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: #0A0A0A;
+  transition: background-color ease 0.3s;
+  border: 1px solid white;
+  margin-right: 10px;
+}
+
+.switch:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  left: 3.5px;
+  top: 3.5px;
+  border-radius: 50%;
+  border: 1px solid black;
+  transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
+}
+
+.switch:checked {
+  background-color: white;
+}
+
+.switch:checked:before {
+  left: 35px;
+}

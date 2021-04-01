@@ -69,7 +69,7 @@ class Messages;
  */
 #define MAKE_STATE(S)                                                                              \
   class S : public State {                                                                         \
-   public:                                                                                         \
+    public:                                                                                        \
     S() {}                                                                                         \
     static S *getInstance() { return &S::instance_; }                                              \
                                                                                                    \
@@ -89,7 +89,7 @@ class Messages;
                S::string_representation_);                                                         \
     }                                                                                              \
                                                                                                    \
-   private:                                                                                        \
+    private:                                                                                       \
     static S instance_;                                                                            \
     /* # converts an argument to a string literal*/                                                \
     static char string_representation_[];                                                          \
