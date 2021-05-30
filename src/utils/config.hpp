@@ -97,6 +97,7 @@ class Config {
     int keyence_l;
     int keyence_r;
     int thermistor;
+    int pressure;
     int master;
     std::vector<int> hp_shutoff;
     int checktime;

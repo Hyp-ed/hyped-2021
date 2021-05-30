@@ -21,6 +21,7 @@
 #include "sensors/main.hpp"
 #include "sensors/gpio_counter.hpp"
 #include "sensors/temperature.hpp"
+#include "sensors/pressure.hpp"
 #include "sensors/fake_gpio_counter.hpp"
 #include "sensors/fake_temperature.hpp"
 #include "utils/config.hpp"
@@ -69,6 +70,8 @@ Main::Main(uint8_t id, utils::Logger& log)
     temperature_ = new FakeTemperature(log_, false);
   }
 
+  pressure_ = new Pressure(log_, sys_.config->sensors.pressure);
+
   // kInit for SM transition
   sensors_ = data_.getSensorsData();
   sensors_.module_status = data::ModuleStatus::kInit;
@@ -92,6 +95,17 @@ void Main::checkTemperature()
   if (data_.getTemperature() > 85 && !log_error_) {
     log_.INFO("Sensors", "PCB temperature is getting a wee high...sorry Cheng");
     log_error_ = true;
+  }
+}
+
+void Main::checkPressure() {
+  Sensors data = data_.getSensorsData();
+  pressure_->run();
+  int pressure = pressure_->getData();
+  data_.setPressure(pressure);
+  if (pressure < data::Sensors::kBrakePressureThreshold) {
+    data.module_status = ModuleStatus::kCriticalFailure;
+    data_.setSensorsData(data);
   }
 }
 
@@ -121,6 +135,7 @@ void Main::run()
     temp_count++;
     if (temp_count % 20 == 0) {       // check every 20 cycles of main
       checkTemperature();
+      checkPressure();
       // So that temp_count does not get huge
       temp_count = 0;
     }

@@ -83,6 +83,20 @@ class TemperatureInterface {
    */
   virtual int getData() = 0;
 };
+
+class PressureInterface {
+  public:
+  /**
+   * @brief not a thread, checks pressure
+   */
+  virtual void run() = 0;
+
+  /**
+   * @brief returns int representation of pressure
+   * @return int pressure
+   */
+  virtual int getData() = 0;
+};
 }}  // namespace hyped::sensors
 
 

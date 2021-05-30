@@ -107,6 +107,13 @@ void Config::parseSensors(char* line)
     }
   }
 
+  if (strcmp(token, "Pressure") == 0) {
+       char* value = strtok(NULL, " ");
+    if (value) {
+      sensors.pressure = atoi(value);
+    }
+  }
+
   if (strcmp(token, "Master") == 0) {
     char* value = strtok(NULL, " ");
     if (value) {

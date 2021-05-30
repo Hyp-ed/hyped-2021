@@ -33,6 +33,8 @@
 
 namespace hyped {
 
+using data::ModuleStatus;
+
 namespace sensors {
 
 /**
@@ -67,6 +69,11 @@ class Main: public Thread {
      */
     void checkTemperature();
 
+    /**
+     * @brief check the pressure levels of the emergency brakes
+     */
+    void checkPressure();
+
     data::Data&     data_;
     utils::System&  sys_;
     utils::Logger&  log_;
@@ -81,6 +88,7 @@ class Main: public Thread {
     ImuManager*                            imu_manager_;
     BmsManager*                            battery_manager_;
     TemperatureInterface*                  temperature_;
+    PressureInterface*                     pressure_;
     bool                                   log_error_ = false;
 
     /**

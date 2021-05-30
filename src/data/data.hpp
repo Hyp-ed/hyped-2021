@@ -92,10 +92,15 @@ struct TemperatureData : public Sensor {
   int temp;   // C
 };
 
+struct PressureData : public Sensor {
+  int pressure; // TODO: UNIT
+};
+
 struct Sensors : public Module {
   static constexpr int kNumImus = 4;
   static constexpr int kNumEncoders = 4;
   static constexpr int kNumKeyence = 2;
+  static constexpr int kBrakePressureThreshold = 123; // TODO: Correct value
 
   DataPoint<array<ImuData, kNumImus>> imu;
   DataPoint<array<EncoderData, kNumEncoders>> encoder;
@@ -228,6 +233,8 @@ class Data {
    */
   void setTemperature(const int& temp);
 
+  int getPressure();
+  void setPressure(const int& temp);
   /**
    * @brief      Retrieves data from all sensors
    */
@@ -314,6 +321,7 @@ class Data {
   Telemetry telemetry_;
   EmergencyBrakes emergency_brakes_;
   int temperature_;  // In degrees C
+  int pressure_;
 
 
   // locks for data substructures

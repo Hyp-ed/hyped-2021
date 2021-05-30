@@ -91,6 +91,18 @@ array<StripeCounter, Sensors::kNumKeyence> Data::getSensorsKeyenceData()
   return sensors_.keyence_stripe_counter;
 }
 
+int Data::getPressure()
+{
+  ScopedLock L(&lock_temp_);
+  return pressure_;
+}
+
+void Data::setPressure(const int& pressure)
+{
+  ScopedLock L(&lock_temp_);
+  pressure_ = pressure;
+}
+
 int Data::getTemperature()
 {
   ScopedLock L(&lock_temp_);
