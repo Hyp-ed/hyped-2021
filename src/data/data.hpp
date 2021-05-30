@@ -100,7 +100,7 @@ struct Sensors : public Module {
   static constexpr int kNumImus = 4;
   static constexpr int kNumEncoders = 4;
   static constexpr int kNumKeyence = 2;
-  static constexpr int kBrakePressureThreshold = 123; // TODO: Correct value
+  static constexpr int kBrakePressureThreshold = 9; // bar
 
   DataPoint<array<ImuData, kNumImus>> imu;
   DataPoint<array<EncoderData, kNumEncoders>> encoder;
