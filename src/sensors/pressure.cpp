@@ -51,8 +51,8 @@ void Pressure::run()
 int Pressure::scaleData(uint16_t raw_value)
 {
   // convert to bar
-  // assuming this is a conversion to volts (should that division be 4096?)
-  double pressure = static_cast<double>(raw_value) / 4095;
+  // https://stackoverflow.com/questions/892723/convert-adc-bins-into-voltage
+  double pressure = (static_cast<double>(raw_value) / 4095) * 5;
   // naive maths: 0-5 volt to 0-10 bar equals multiply by 2
   pressure = 2 * pressure;
   // truncate down - should work since we are considering an integer-valued threshold
