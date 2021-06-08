@@ -93,7 +93,7 @@ struct TemperatureData : public Sensor {
 };
 
 struct Sensors : public Module {
-  static constexpr int kNumImus = 4;
+  static constexpr int kNumImus = 1;
   static constexpr int kNumEncoders = 4;
   static constexpr int kNumKeyence = 2;
 

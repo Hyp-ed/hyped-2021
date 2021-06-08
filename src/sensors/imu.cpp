@@ -90,8 +90,8 @@ Imu::Imu(Logger& log, uint32_t pin, bool is_fifo)
     is_fifo_(is_fifo),
     is_online_(false)
 {
-  log_.DBG1("Imu pin: ", "%d", pin);
-  log_.INFO("Imu", "Creating Imu sensor now:");
+  log_.ERR("Imu pin: ", "%d", pin);
+  log_.ERR("Imu", "Creating Imu sensor now:");
   init();
 }
 
@@ -127,10 +127,10 @@ void Imu::init()
 
   setAcclScale();
 
-  enableFifo();
+  // enableFifo();
 
   if (check_init) {
-    log_.INFO("Imu", "Imu sensor %d created. Initialisation complete.", pin_);
+    log_.ERR("Imu", "Imu sensor %d created. Initialisation complete.", pin_);
     selectBank(0);
   } else {
     log_.ERR("Imu", "ERROR: Imu sensor %d not initialised.", pin_);
@@ -157,7 +157,7 @@ void Imu::enableFifo()
   readByte(kUserCtrl, &check_enable);       // in user control
 
   if (check_enable == (data | 0x40)) {
-    log_.INFO("Imu", "FIFO Enabled");
+    log_.ERR("Imu", "FIFO Enabled");
   } else {
     log_.ERR("Imu", "ERROR: FIFO not enabled");
   }
@@ -171,12 +171,12 @@ bool Imu::whoAmI()
 
   for (send_counter = 1; send_counter < 10; send_counter++) {
     readByte(kWhoAmIImu, &data);
-    log_.DBG1("Imu", "Imu connected to SPI, data: %d", data);
+    log_.ERR("Imu", "Imu connected to SPI, data: %d", data);
     if (data == kWhoAmIResetValue) {
       is_online_ = true;
       break;
     } else {
-      log_.DBG1("Imu", "Cannot initialise. Who am I is incorrect");
+      log_.ERR("Imu", "Cannot initialise. Who am I is incorrect");
       is_online_ = false;
       Thread::yield();
     }
@@ -190,15 +190,15 @@ bool Imu::whoAmI()
 
 Imu::~Imu()
 {
-  log_.INFO("Imu", "Deconstructing sensor %d object", pin_);
+  log_.ERR("Imu", "Deconstructing sensor %d object", pin_);
 }
 
 void Imu::selectBank(uint8_t switch_bank)
 {
   writeByte(kRegBankSel, (switch_bank << 4));
-  // log_.DBG1("Imu", "bank switch = %d", (switch_bank << 4));
+  // log_.ERR("Imu", "bank switch = %d", (switch_bank << 4));
   user_bank_ = switch_bank;
-  log_.DBG1("Imu", "User bank switched to %u", user_bank_);
+  log_.ERR("Imu", "User bank switched to %u", user_bank_);
 }
 
 void Imu::writeByte(uint8_t write_reg, uint8_t write_data)
@@ -271,13 +271,13 @@ int Imu::readFifo(ImuData* data)
     uint16_t fifo_size = (((uint16_t) (size_buffer[0]&0x1F)) << 8) | (size_buffer[1]);
 
     if (fifo_size == 0) {
-      log_.DBG1("Imu-FIFO", "FIFO EMPTY");
+      log_.ERR("Imu-FIFO", "FIFO EMPTY");
       return 0;
     }
-    log_.DBG1("Imu-FIFO", "Buffer size = %d", fifo_size);
+    log_.ERR("Imu-FIFO", "Buffer size = %d", fifo_size);
     int16_t axcounts, aycounts, azcounts;           // include negative int
     float value_x, value_y, value_z;
-    log_.DBG1("Imu-FIFO", "iterating = %d", (fifo_size/kFrameSize_));
+    log_.ERR("Imu-FIFO", "iterating = %d", (fifo_size/kFrameSize_));
     for (size_t i = 0; i < (fifo_size/kFrameSize_); i++) {    // make sure is less than array size
       readBytes(kFifoRW, buffer, kFrameSize_);
       axcounts = (((int16_t)buffer[0]) << 8) | buffer[1];     // 2 byte acc data for xyz
@@ -295,7 +295,7 @@ int Imu::readFifo(ImuData* data)
       imu_data[1] = value_y/acc_divider_  * 9.80665;
       imu_data[2] = value_z/acc_divider_  * 9.80665;
       data->fifo.push_back(imu_data);
-      // log_.INFO("Imu-FIFO", "FIFO readings %d: %f m/s^2, y: %f m/s^2, z: %f m/s^2", 0, imu_data[0], imu_data[1], imu_data[2]);   // NOLINT
+      // log_.ERR("Imu-FIFO", "FIFO readings %d: %f m/s^2, y: %f m/s^2, z: %f m/s^2", 0, imu_data[0], imu_data[1], imu_data[2]);   // NOLINT
     }
     return 1;
   } else {
@@ -312,12 +312,12 @@ void Imu::getData(ImuData* data)
     if (is_fifo_) {
       int count = readFifo(data);   // TODO(anyone): does this synax work?
       if (count) {
-        log_.DBG2("Imu", "Fifo filled");
+        log_.ERR("Imu", "Fifo filled");
       } else {
-        log_.DBG2("Imu", "Fifo empty");
+        log_.ERR("Imu", "Fifo empty");
       }
     } else {
-      log_.DBG2("Imu", "Getting Imu data");
+      log_.DBG1("Imu", "Getting Imu data");
       auto& acc = data->acc;
       uint8_t response[8];
       int16_t bit_data;
