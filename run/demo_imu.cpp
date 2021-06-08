@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
   while (true) {
     data_array_ = data.getSensorsImuData();
     for (int j = 0; j < 1; j++) {
-      log.INFO("TEST-ImuManager", "accelerometer readings %d: %f m/s^2, y: %f m/s^2, z: %f m/s^2",
+      log.ERR("TEST-ImuManager", "accelerometer readings %d: %f m/s^2, y: %f m/s^2, z: %f m/s^2",
                 j,
                 data_array_.value[j].acc[0],
                 data_array_.value[j].acc[1],
