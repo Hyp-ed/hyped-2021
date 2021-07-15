@@ -64,19 +64,41 @@ BMS::~BMS()
 void BMS::request()
 {
   // send request CanFrame
+  //LP BMS ID TBD(need to set on the converter)
+  //Assume id == 300 for now
+  //request cell voltage
   utils::io::can::Frame message;
-  message.id       = bms::kIdBase + (bms::kIdIncrement * id_);
+  message.id       = 300
   message.extended = true;
   message.len      = 2;
-  message.data[0]  = 0;
-  message.data[1]  = 0;
+  message.data[0]  = 0xAA;
+  message.data[1]  = 0x1C;
+  crc_word = CRC16(message.data,2);
+  message.data[2]  = crc_word <<4;
+  message.data[3]  = (crc_word << 4)>>4;
 
   int sent = can_.send(message);
   if (sent) {
-    log_.DBG1("BMS", "module %u: request message sent", id_);
+    log_.DBG1("BMS", "module %u: request cell voltage message sent", id_);
   } else {
-    log_.ERR("BMS", "module %u error: request message not sent", id_);
+    log_.ERR("BMS", "module %u error: request cell voltage message not sent", id_);
   }
+  //temperature request message
+  message.id       = 300
+  message.extended = true;
+  message.len      = 2;
+  message.data[0]  = 0xAA;
+  message.data[1]  =  0x1B;
+  crc_word = CRC16(message.data,2);
+  message.data[2]  = crc_word <<4;
+  message.data[3]  = (crc_word << 4)>>4;
+  int sent = can_.send(message);
+  if (sent) {
+    log_.DBG1("BMS", "module %u: request temperature message sent", id_);
+  } else {
+    log_.ERR("BMS", "module %u error: temperature voltage message not sent", id_);
+  }
+
 }
 
 void BMS::run()
@@ -91,55 +113,25 @@ void BMS::run()
 
 bool BMS::hasId(uint32_t id, bool extended)
 {
-  if (!extended) return false;  // this BMS only understands extended IDs
-
-  // LP BMS CAN messages
-  if (id_base_ <= id && id < id_base_ + bms::kIdSize) return true;
-
-  // LP current CAN message
-  if (id == 0x28) return true;
-
-  return false;
+  //LP BMS ID TBD(need to set on the converter)
+  //Assume id == 300 for now
+  if (message.id == 300){
+    return true
+  }
 }
 
 void BMS::processNewData(utils::io::can::Frame &message)
 {
   log_.DBG1("BMS", "module %u: received CAN message with id %d", id_, message.id);
 
-  // check current CAN message
-  if (message.id == 0x28) {
-    if (message.len < 3) {
-      log_.ERR("BMS", "module %u: current reading not enough data", id_);
-      return;
+  if (messsage.data[1] == 0x1C){
+    for (int i = 0; i < 16; i++) {
+      data_.voltage[i] = (message.data[2 * i + 4] << 1) | message.data[2 * i + 5];
     }
-
-    current_ = (message.data[1] << 8) | (message.data[2]);
-    return;
   }
-
-  log_.DBG2("BMS", "message data[0,1] %d %d", message.data[0], message.data[1]);
-  uint8_t offset = message.id - (bms::kIdBase + (bms::kIdIncrement * id_));
-  switch (offset) {
-    case 0x1:  // cells 1-4
-      for (int i = 0; i < 4; i++) {
-        data_.voltage[i] = (message.data[2 * i] << 8) | message.data[2 * i + 1];
-      }
-      break;
-    case 0x2:  // cells 5-7
-      for (int i = 0; i < 3; i++) {
-        data_.voltage[4 + i] = (message.data[2 * i] << 8) | message.data[2 * i + 1];
-      }
-      break;
-    case 0x3:  // ignore, no cells connected
-      break;
-    case 0x4:  // temperature
-      data_.temperature = message.data[0] - bms::Data::kTemperatureOffset;
-      break;
-    default:
-      log_.ERR("BMS", "received invalid message, id %d, CANID %d, offset %d", id_, message.id,
-               offset);
+  if (messsage.data[1] == 0x1B){
+    data_.temperature = (message.data[6] << 1) | message.data[7];
   }
-
   last_update_time_ = utils::Timer::getTimeMicros();
 }
 
@@ -181,6 +173,20 @@ void BMS::getData(BatteryData *battery)
     battery->charge = 0;
   }
 }
+
+uint16_t CRC16(const uint8_t* data, uint16_t length)
+{
+  uint8_t tmp;
+  uint16_t crcWord = 0xFFFF;
+  while (length--)
+  {
+    tmp = *data++ ^ crcWord;
+    crcWord >>= 8;
+    crcWord ^= kcrcTable[tmp];
+  }
+  return crcWord;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // BMSHP
