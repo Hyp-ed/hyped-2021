@@ -82,6 +82,8 @@ constexpr uint8_t kI2cSlv0Do                = 0x06;   // userbank 3
 constexpr uint8_t kI2cSlv0Ctrl              = 0x05;   // userbank 3
 constexpr uint8_t kFifoEnable1              = 0x66;   // userbank 0
 constexpr uint8_t kExtSlvSensData00         = 0x3B;   // userbank 0
+// constexpr uint8_t kExtSlvSensData00         = 0x3B;   // userbank 0
+constexpr uint8_t kExtSlvSensData06         = 0x41;   // userbank 0
 
 
 
@@ -106,6 +108,9 @@ Magnetometer::Magnetometer(Logger& log, uint32_t pin, bool is_fifo)
   log_.INFO("Magnetometer", "Creating Magnetometer sensor now:");
   init();
 }
+
+// sources I used, https://devzone.nordicsemi.com/f/nordic-q-a/36615/invensense-icm-20948
+// https://github.com/kriswiner/MPU9250/issues/367
 
 void Magnetometer::init()
 {
@@ -139,28 +144,35 @@ void Magnetometer::init()
 
   selectBank(0);
   // Step 1.
+
+  // Enable the I2C master
   writeByte(kUserCtrl, 0x20);
+  Thread::sleep(10);
   selectBank(3);
-  // Step 2.
-  writeByte(kI2cMstCtrl, 0x17);
-  // Step 3.
-  writeByte(kI2cMstDelayCtrl, 0x01);
-  // Step 4.
-  writeByte(kI2cSlv0Addr, 0x0C);
-  // Step 5.
-  writeByte(kI2cSlv0Reg, 0x31);
-  // Step 6.
-  writeByte(kI2cSlv0Do, 0x04);
-  // Step 7.
-  writeByte(kI2cSlv0Ctrl, 0xA7);
-  // Step 8.
-  writeByte(kI2cSlv0Addr, 0x8C);
-  writeByte(kI2cSlv0Reg, 0x11);
+
+  // writeByte(kI2cMstCtrl, 0x97); // Enable the I2C Multi Master
+  writeByte(kI2cMstCtrl, 0x07); // Enable the I2C Multi Master
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Addr, 0x0C); // Set the slave 0 addr of mag
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Reg, 0x32); // AK09916 control 3
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Do, 0x01); // reset the mag
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Ctrl, 0x81); // enable i2c, set 1 byte
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Reg, 0x31); // AK09916 control 2
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Do, 0x08); // set the value to continous measurement
+  Thread::sleep(100);
+  writeByte(kI2cSlv0Ctrl, 0x81); // enable i2c, set 1 byte
+  Thread::sleep(100);
+
 
   setAcclScale();
 
   if (check_init) {
-    log_.INFO("Magnetometer", "Magnetometer sensor %d created. Initialisation complete.", pin_);
+    log_.ERR("Magnetometer", "Magnetometer sensor %d created. Initialisation complete.", pin_);
     selectBank(0);
   } else {
     log_.ERR("Magnetometer", "ERROR: Magnetometer sensor %d not initialised.", pin_);
@@ -301,18 +313,30 @@ void Magnetometer::getMagData(ImuData* data)
     float value;
     int i;
     float accel_data[3];
+    // uint8_t random;
+
+    selectBank(3);
+    writeByte(kI2cSlv0Addr, 0x8C); // Set for read
+    writeByte(kI2cSlv0Reg, 0x11);
+    writeByte(kI2cSlv0Ctrl, 0x88);
+    Thread::sleep(100);
 
     selectBank(0);
     readBytes(kExtSlvSensData00, response, 8);
-    for (i = 0; i < 3; i++) {
-      bit_data = ((int16_t) response[i*2+1] << 8) | response[i*2];
-      value = static_cast<float>(bit_data);
-      accel_data[i] = value;
-    }
+    // readByte(kExtSlvSensData06, &random);
+
+    // for (i = 0; i < 3; i++) {
+    //   bit_data = ((int16_t) response[i*2+1] << 8) | response[i*2];
+    //   value = static_cast<float>(bit_data);
+    //   accel_data[i] = value;
+    // }
+    accel_data[0] = static_cast<float>(((int16_t) response[1] << 8) | response[0]);
+    accel_data[1] = static_cast<float>(((int16_t) response[3] << 8) | response[2]);
+    accel_data[2] = static_cast<float>(((int16_t) response[5] << 8) | response[4]);
     data->operational = is_online_;
-    data->acc[0] = accel_data[0];
-    data->acc[1] = accel_data[1];
-    data->acc[2] = accel_data[2];
+    data->acc[0] = accel_data[0] * 0.15;
+    data->acc[1] = accel_data[1] * 0.15;
+    data->acc[2] = accel_data[2] * 0.15;
   } else {
     // Try and turn the sensor on again
     log_.ERR("Magnetometer", "Sensor not operational, trying to turn on sensor");

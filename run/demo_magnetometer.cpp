@@ -52,9 +52,10 @@ int main(int argc, char* argv[])
   while (true) {
     imu->getData(&accData);
     imu->getMagData(&magData);
-    // log.ERR("IMU", "Accelerometer x: %f m/s^2, y: %f m/s^2, z: %f m/s^2 Magnetometer x: %f m/s^2, y: %f m/s^2, z: %f m/s^2", accData.acc[0], accData.acc[1], accData.acc[2], magData.acc[0], magData.acc[1], magData.acc[2]);
-    log.ERR("IMU", "Mag x: %.2f, y: %.2f, z: %.2f", magData.acc[0], magData.acc[1], magData.acc[2]);
-    Thread::sleep(500);
+    log.ERR("IMU", "Accelerometer x: %f m/s^2, y: %f m/s^2, z: %f m/s^2 Magnetometer x: %.0f, y: %.0f, z: %.0f", 
+    accData.acc[0], accData.acc[1], accData.acc[2], magData.acc[0], magData.acc[1], magData.acc[2]);
+    // log.ERR("IMU", "Mag x: %.2f, y: %.2f, z: %.2f", magData.acc[0], magData.acc[1], magData.acc[2]);
+    Thread::sleep(100);
   }
 
   return 0;
